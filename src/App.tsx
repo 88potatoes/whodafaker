@@ -9,8 +9,19 @@ function App() {
 
   return (
     <>
-      <div>WhoDaFaker</div>
-      <div>
+      <div><h2>WhoDaFaker</h2></div>
+      <div className="container row gx-3">
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
+        <Card/>
         <Card/>
       </div>
     </>
