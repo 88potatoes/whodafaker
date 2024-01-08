@@ -3,10 +3,28 @@
 // import viteLogo from '/vite.svg'
 import './App.css'
 import CardGrid from './CardGrid'
+import { 
+  DocumentSnapshot,
+  doc, getDoc
+} from 'firebase/firestore';
+import { db } from './main';
+import { useEffect, useState } from 'react';
 
 function App() {
-  // const [count, setCount] = useState(0)
-  const words: string[] = ['josher', 'tyana', 'jerri'];
+  const [words, setWords] = useState(['josher', 'tyana', 'jerri']);
+
+  useEffect(() => {
+    const setDoc = doc(db, 'sets', 'wD26eGha81PXCMwDkw6Y')
+    getDoc(setDoc)
+    .then((result: DocumentSnapshot) => {
+      if (result.exists()) {
+        console.log(result.data().words)
+        setWords(result.data().words)
+      }
+    })
+
+  }, [])
+
   return (
     <>
       <div><h2>WhoDaFaker</h2></div>
