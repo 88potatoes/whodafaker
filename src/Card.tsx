@@ -1,7 +1,11 @@
-function Card() {
+interface CardProps {
+    word: string;
+}
+
+function Card(props: CardProps) {
     return <div className="col-4 col-sm-3 col-md-2 text-center py-3 border-1 border-black">
         <div className="col bg-info py-3">
-            Word
+            {props.word}
         </div>
     </div>
 }

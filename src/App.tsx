@@ -11,18 +11,9 @@ function App() {
     <>
       <div><h2>WhoDaFaker</h2></div>
       <div className="container row gx-3">
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
-        <Card/>
+        <Card word="eric"/>
+        <Card word="victor"/>
+        <Card word="josher"/>
       </div>
     </>
   )
