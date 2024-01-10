@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { auth, db } from "./main";
-import { collection, getDocs, limit, query, where } from "firebase/firestore";
+import { Query, collection, getDocs, limit, query, where } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import SetCard from "./SetCard";
+import { onAuthStateChanged } from "firebase/auth";
 
 function Dashboard() {
 
@@ -10,24 +11,25 @@ function Dashboard() {
     const [sets, setSets] = useState<string[]>([])
 
     useEffect(() => {
-        if (!auth.currentUser) {
-            navigate('/login')
-            return;
-        }
-
-        const q = query(collection(db, "sets"), where("id", "==", auth.currentUser.uid), limit(4))
-        getDocs(q)
-        .then(snapshot => {
-            const localSets: string[] = []
-            snapshot.docs.forEach(doc => {
-
-                localSets.push(doc.data().name)
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                navigate('/login')
+            }
+            const q = query(collection(db, "sets"), where("id", "==", auth.currentUser.uid), limit(4))
+            getDocs(q)
+            .then(snapshot => {
+                const localSets: string[] = []
+                snapshot.docs.forEach(doc => {
+    
+                    localSets.push(doc.data().name)
+                })
+                setSets(localSets);
             })
-            setSets(localSets);
+            .catch(error => {
+                console.log(error)
+            })
         })
-        .catch(error => {
-            console.log(error)
-        })
+        
     }, [])
 
     return ( 
