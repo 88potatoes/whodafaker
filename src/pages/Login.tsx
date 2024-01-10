@@ -1,10 +1,18 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { FormEvent } from "react";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { FormEvent, useEffect } from "react";
 import { auth } from "../main";
 import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                navigate('/dashboard')
+            }
+        })
+    }, [])
 
     function emailLogin(e: FormEvent) {
         e.preventDefault();
