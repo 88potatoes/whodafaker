@@ -1,10 +1,28 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { FormEvent } from "react";
+import { auth } from "../main";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+    const navigate = useNavigate();
 
     function emailLogin(e: FormEvent) {
         e.preventDefault();
         console.log('email login')
+
+        const emailInput = document.getElementById('email') as HTMLInputElement;
+        const passwordInput = document.getElementById('password') as HTMLInputElement;
+
+        console.log(emailInput?.value, passwordInput.value)
+
+        signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
+        .then(cred => {
+            console.log(cred)
+            navigate("/dashboard")
+        })
+        .catch(error => {
+            console.log(error)
+        })
     }
 
     return ( 
@@ -17,11 +35,11 @@ function Login() {
                 <form onSubmit={emailLogin} className="d-flex flex-column col-6 justify-content-center align-items-center mb-5">
                     <div className="d-flex flex-column align-items-start">
                         <label htmlFor="email">Email</label>
-                        <input type="email" required/>
+                        <input type="email" id="email" required/>
                     </div>
                     <div className="d-flex flex-column align-items-start">
                         <label htmlFor="password">Password</label>
-                        <input type="password" required/>
+                        <input type="password" id="password" required/>
                     </div>
                     <div className="m-2">
                         <input type="submit" />
