@@ -4,12 +4,7 @@ import App from './App.tsx'
 import './index.css'
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+import { getAuth } from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: "AIzaSyDvzhbFbUviLdTVBtekCJ3cZNqAcQbUALU",
@@ -23,5 +18,13 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 const db = getFirestore();
+const auth = getAuth(app);
 
-export { app, db };
+export { app, db, auth };
+
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
