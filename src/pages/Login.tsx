@@ -1,7 +1,7 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { FormEvent } from "react";
 import { auth } from "../main";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
     const navigate = useNavigate();
@@ -46,8 +46,19 @@ function Login() {
                     </div>
                 </form>
 
-                <div>
+                <div className="m-2">
                     <button id="GoogleSignIn">Sign in with Google</button>
+                </div>
+                <div className="m-2">
+                    <Link to="/">
+                        <button id="HomeButton">Home</button>
+                    </Link>
+                </div>
+                <div className="m-2">No Account?
+
+                    <Link to="/signup">
+                        <button id="SignupButton">Sign up</button>
+                    </Link>
                 </div>
             </div>
         </div>

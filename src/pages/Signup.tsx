@@ -21,8 +21,11 @@ function Signup() {
                 displayName: usernameElement.value
             })
         })
+        .then(() => {
+            navigate("/dashboard")
+        })
         .catch(error => {
-            console.log(error)
+            alert(error)
         })
 
 
