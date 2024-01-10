@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { FormEvent } from "react";
 import { auth } from "../main";
 import { useNavigate } from "react-router-dom";
@@ -16,8 +16,10 @@ function Signup() {
 
         createUserWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
         .then(cred => {
-            console.log(cred);
-            navigate("/dashboard")
+            const usernameElement = document.getElementById('username') as HTMLInputElement;
+            return updateProfile(cred.user, {
+                displayName: usernameElement.value
+            })
         })
         .catch(error => {
             console.log(error)
@@ -31,6 +33,10 @@ function Signup() {
             <div className="col d-flex flex-column justify-content-center text-center align-items-center">
                 <h1>Signup</h1>
                 <form onSubmit={emailSignup} className="d-flex flex-column col-6 justify-content-center align-items-center mb-5">
+                    <div className="d-flex flex-column align-items-start">
+                        <label htmlFor="username">Username</label>
+                        <input type="text" id="username" required/>
+                    </div>
                     <div className="d-flex flex-column align-items-start">
                         <label htmlFor="email">Email</label>
                         <input type="email" id="email" required/>
