@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { auth, db } from "./main";
-import { Query, collection, getDocs, limit, query, where } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
-import SetCard from "./SetCard";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import { collection, getDocs, limit, query, where } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import SetCard from "./SetCard";
+import { auth, db } from "./main";
 
 function Dashboard() {
 
@@ -46,6 +46,11 @@ function Dashboard() {
         </div>
         <div className="row" id="setContainer">
             {sets.map((name, index) => <SetCard word={name} key={index}/>)}
+        </div>
+        <div className="row">
+            <Link to="/createset">
+                <button>Create New Set</button>
+            </Link>
         </div>
         <div className="row">
             <button onClick={handleLogout}>Logout</button>

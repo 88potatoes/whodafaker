@@ -1,5 +1,5 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { FormEvent } from "react";
+import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from "firebase/auth";
+import { FormEvent, useEffect } from "react";
 import { auth } from "../main";
 import { useNavigate } from "react-router-dom";
 

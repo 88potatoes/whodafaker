@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './Dashboard';
+import CreateSet from './pages/CreateSet';
 
 function App() {
   return (
@@ -16,8 +17,8 @@ function App() {
       <Route path="/login" element={<Login/>}/>
       <Route path="/signup" element={<Signup/>}/>
       <Route path="/dashboard" element={<Dashboard/>}/>
+      <Route path="/createset" element={<CreateSet/>}/>
       {/* 
-      <Route path="/sets" element={<Home/>}/>
       <Route path="/sets" element={<Home/>}/> */}
     </Routes>
   </Router>
