@@ -6,6 +6,14 @@ import { useNavigate } from "react-router-dom";
 function Signup() {
     const navigate = useNavigate();
 
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                navigate('/dashboard')
+            }
+        })
+    }, [])
+
     function emailSignup(e: FormEvent) {
         e.preventDefault();
         
