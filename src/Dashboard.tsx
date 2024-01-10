@@ -3,7 +3,7 @@ import { auth, db } from "./main";
 import { Query, collection, getDocs, limit, query, where } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import SetCard from "./SetCard";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 function Dashboard() {
 
@@ -14,6 +14,7 @@ function Dashboard() {
         onAuthStateChanged(auth, (user) => {
             if (!user) {
                 navigate('/login')
+                return;
             }
             const q = query(collection(db, "sets"), where("id", "==", auth.currentUser.uid), limit(4))
             getDocs(q)
@@ -32,6 +33,10 @@ function Dashboard() {
         
     }, [])
 
+    function handleLogout() {
+        signOut(auth);
+    }
+
     return ( 
     <div className="container">
         <div className="row">
@@ -41,6 +46,9 @@ function Dashboard() {
         </div>
         <div className="row" id="setContainer">
             {sets.map((name, index) => <SetCard word={name} key={index}/>)}
+        </div>
+        <div className="row">
+            <button onClick={handleLogout}>Logout</button>
         </div>
     </div>  
     );
