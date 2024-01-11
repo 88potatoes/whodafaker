@@ -1,18 +1,13 @@
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
-import { Navigate, Route, BrowserRouter as Router, Routes, useNavigate } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import Dashboard from './pages/Dashboard';
 import CreateSet from './pages/CreateSet';
-import { auth } from './main';
-import { onAuthStateChanged } from 'firebase/auth';
-import { useEffect } from 'react';
-import Room from './pages/Room';
+import Dashboard from './pages/Dashboard';
+import Home from './pages/Home';
 import JoinRoom from './pages/JoinRoom';
+import Login from './pages/Login';
+import Room from './pages/Room';
+import Signup from './pages/Signup';
+import InRoom from './pages/InRoom';
 
 function App() {
   return (
@@ -26,6 +21,7 @@ function App() {
       <Route path="/createset/:setId" element={ <CreateSet/> }/>
       <Route path="/room/:roomCode" element={ <Room/> }/>
       <Route path="/join" element={ <JoinRoom/> }/>
+      <Route path="/joined/:roomCode" element={ <InRoom/> }/>
     </Routes>
   </Router>
   )
