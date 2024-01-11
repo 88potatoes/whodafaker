@@ -6,11 +6,12 @@ import './App.css';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Dashboard from './Dashboard';
+import Dashboard from './pages/Dashboard';
 import CreateSet from './pages/CreateSet';
 import { auth } from './main';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useEffect } from 'react';
+import Room from './pages/Room';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path="/dashboard" element={  <Dashboard/> }/>
       <Route path="/createset/" element={ <CreateSet setId=""/> }/>
       <Route path="/createset/:setId" element={ <CreateSet/> }/>
+      <Route path="/room/:roomCode" element={ <Room/> }/>
     </Routes>
   </Router>
   )
