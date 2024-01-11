@@ -3,7 +3,7 @@ import CardGrid from "../CardGrid";
 import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../main";
 import { onAuthStateChanged } from "firebase/auth";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 interface CreateSetProps {
     setId: string
@@ -71,7 +71,14 @@ function CreateSet({ setId = "" }) {
         }
     }
 
-    return ( <div>
+    return ( 
+    <div>
+        <Link to="/dashboard">
+            <button>Dashboard</button>
+        </Link>
+        <div className="row">
+            <h1>Logged in as {auth.currentUser?.displayName}</h1>
+        </div>
         <div className="row">
             <h4>setName</h4>
             <input type="text" value={setName} onChange={(e) => {
@@ -87,8 +94,11 @@ function CreateSet({ setId = "" }) {
         <div className="row">
             <CardGrid items={words}/>
         </div>
-        <div>
+        <div className="m-2">
             <button onClick={saveSet}>Save</button>
+        </div>
+        <div className="m-2">
+            <button>Start Game</button>
         </div>
     </div> );
 }
