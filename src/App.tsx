@@ -12,6 +12,7 @@ import { auth } from './main';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useEffect } from 'react';
 import Room from './pages/Room';
+import JoinRoom from './pages/JoinRoom';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route path="/createset/" element={ <CreateSet setId=""/> }/>
       <Route path="/createset/:setId" element={ <CreateSet/> }/>
       <Route path="/room/:roomCode" element={ <Room/> }/>
+      <Route path="/join" element={ <JoinRoom/> }/>
     </Routes>
   </Router>
   )
