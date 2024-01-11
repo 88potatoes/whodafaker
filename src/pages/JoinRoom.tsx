@@ -6,7 +6,7 @@ function JoinRoom() {
     function JoinRoom(e: FormEvent) {
         e.preventDefault();
         const roomCodeElement = document.getElementById('roomcode') as HTMLInputElement;
-        const roomCode = roomCodeElement.value;
+        const roomCode = roomCodeElement.value.toUpperCase();
 
         console.log(roomCode)
 
