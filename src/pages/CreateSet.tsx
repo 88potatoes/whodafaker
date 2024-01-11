@@ -1,18 +1,44 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import CardGrid from "../CardGrid";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../main";
+import { onAuthStateChanged } from "firebase/auth";
+import { useNavigate, useParams } from "react-router-dom";
 
-function CreateSet() {
+interface CreateSetProps {
+    setId: string
+}
+
+function CreateSet({ setId = "" }) {
+    const { setId: paramSetId } = useParams();
+    const finalSetId = setId || paramSetId;
     const [words, setWords] = useState<string[]>([])
     const [setName, setSetName] = useState("")
+    const navigate = useNavigate();
 
     const formElement = document.getElementById('wordForm') as HTMLFormElement;
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                navigate("/login")
+            }
+        })
+
+        if (finalSetId) {
+            const docRef = doc(db, "sets", setId)
+            getDoc(docRef)
+            .then(doc => {
+                console.log(doc.data())
+            })
+        }
+    }, [])
+
 
     function handleNewWord(e: FormEvent) {
         e.preventDefault();
 
-        const wordElement = formElement.elements.namedItem('wordentry')! as HTMLInputElement;
+        const wordElement = formElement.elements.namedItem('wordentry') as HTMLInputElement;
         if (words.length >= 20) {
             alert("too many words. max: 20 words")
         } else {

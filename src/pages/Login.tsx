@@ -5,14 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
     const navigate = useNavigate();
-
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                navigate('/dashboard')
+                navigate("/dashboard")
             }
         })
-    }, [])
+    })
 
     function emailLogin(e: FormEvent) {
         e.preventDefault();

@@ -5,10 +5,15 @@ import { Link, useNavigate } from "react-router-dom";
 import SetCard from "./SetCard";
 import { auth, db } from "./main";
 
+interface SetInfo {
+    name: string,
+    id: string
+}
+
 function Dashboard() {
 
     const navigate = useNavigate();
-    const [sets, setSets] = useState<string[]>([])
+    const [sets, setSets] = useState<SetInfo[]>([])
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
@@ -19,11 +24,12 @@ function Dashboard() {
             const q = query(collection(db, "sets"), where("id", "==", auth.currentUser.uid), limit(4))
             getDocs(q)
             .then(snapshot => {
-                const localSets: string[] = []
+                const localSets: SetInfo[] = []
                 snapshot.docs.forEach(doc => {
     
-                    localSets.push(doc.data().name)
+                    localSets.push({name: doc.data().name, id: doc.id})
                 })
+                console.log(localSets)
                 setSets(localSets);
             })
             .catch(error => {
@@ -45,7 +51,11 @@ function Dashboard() {
             </div>
         </div>
         <div className="row" id="setContainer">
-            {sets.map((name, index) => <SetCard word={name} key={index}/>)}
+            {sets.map((setInfo, index) => {
+                console.log(setInfo)
+                return <SetCard word={setInfo.name} key={index} setId={setInfo.id}/>
+                })
+            }
         </div>
         <div className="row">
             <Link to="/createset">
