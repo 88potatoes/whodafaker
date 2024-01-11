@@ -12,6 +12,7 @@ interface CreateSetProps {
 function CreateSet({ setId = "" }) {
     const { setId: paramSetId } = useParams();
     const finalSetId = setId || paramSetId;
+    const isNew = finalSetId ? false : true;
     const [words, setWords] = useState<string[]>([])
     const [setName, setSetName] = useState("")
     const navigate = useNavigate();
@@ -26,10 +27,12 @@ function CreateSet({ setId = "" }) {
         })
 
         if (finalSetId) {
-            const docRef = doc(db, "sets", setId)
+            const docRef = doc(db, "sets", finalSetId)
             getDoc(docRef)
             .then(doc => {
                 console.log(doc.data())
+                setWords(doc.data().words)
+                setSetName(doc.data().name)
             })
         }
     }, [])
@@ -48,15 +51,24 @@ function CreateSet({ setId = "" }) {
     }
 
     function saveSet() {
-
-        addDoc(collection(db, "sets"), {
-            id: auth.currentUser.uid,
-            words: words,
-            name: setName
-        })
-        .then(doc => {
-            console.log(doc)
-        })
+        if (finalSetId) {
+            const docRef = doc(db, "sets", finalSetId)
+            setDoc(docRef, {
+                words: words,
+                id: auth.currentUser.uid,
+                name: setName
+            })
+        } else {
+            addDoc(collection(db, "sets"), {
+                id: auth.currentUser.uid,
+                words: words,
+                name: setName
+            })
+            .then(doc => {
+                console.log(doc)
+                navigate(`/createset/${doc.id}`)
+            })
+        }
     }
 
     return ( <div>
