@@ -24,6 +24,11 @@ function Room() {
             }
         })
 
+        socket.on("players_update", (data) => {
+            // TODO can make more efficient by just sending the delta
+            setPlayers(data.players)
+        })
+
         return () => {
             socket.disconnect();
         }
