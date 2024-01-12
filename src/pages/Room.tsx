@@ -143,7 +143,10 @@ function Room() {
     </div> :
     <div>
         <CardGrid items={words}/>
-        <button onClick={() => {setInGame(false)}}>End Game</button>
+        <button onClick={() => {
+            socket?.emit("end_game", {roomCode: roomCode})
+            setInGame(false)
+        }}>End Game</button>
     </div>
     );
 }

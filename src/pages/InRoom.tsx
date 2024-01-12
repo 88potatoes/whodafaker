@@ -65,7 +65,7 @@ function InRoom() {
                     <h1>Joined Room {roomCode} </h1> 
                 :
                 <>
-                    <button onClick={toggleReveal}>Click to reveal</button>
+                    <button onClick={toggleReveal}>{`Click to ${revealed ? "hide" : "reveal"}`}</button>
                     <div id="reveal" style={{ display: revealed ? "block" : "none"}}>
                         {HiddenElement}
                     </div>
