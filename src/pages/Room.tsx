@@ -51,11 +51,16 @@ function Room() {
         <div className="row">
             <h1>Room {roomCode}</h1>
         </div>
-        <div className="row">
-            <h2>Players</h2>
-            {players.map((number, index) => {
-                return <div className="col-3" key={index}><h1>{number}</h1></div>
-            })}
+        <div className="container">
+            <div className="row">
+                <h2>Players</h2>
+                <div className="col">
+                    {players.map((number, index) => {
+                        return <div className="row" key={index}><h4>{number}</h4></div>
+                    })}
+
+                </div>
+            </div>
         </div>
         <div>
             <h2>Set</h2>
