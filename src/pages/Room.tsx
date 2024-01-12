@@ -1,11 +1,22 @@
+import { DocumentData, collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { io } from "socket.io-client";
+import { auth, db } from "../main";
+import { onAuthStateChanged } from "firebase/auth";
+import { SetInfo } from "./Dashboard";
+import SetCard from "../SetCard";
 
+interface RoomProps {
+    sets: SetInfo[]
+}
 function Room() {
     const params = useParams();
+
     const navigate = useNavigate();
     const [players, setPlayers] = useState<number[]>([])
+    const [sets, setSets] = useState<DocumentData[]>([])
+    const [gameSet, setGameSet] = useState<DocumentData>({})
     const roomCode = params.roomCode;
     console.log(roomCode);
 
@@ -29,26 +40,28 @@ function Room() {
             setPlayers(data.players)
         })
 
+        const unsubscribe = onAuthStateChanged(auth, user => {
+            if (!user) return;
+
+            const setQuery = query(collection(db, "sets"), where("id", "==", user.uid))
+            getDocs(setQuery)
+            .then(snapshot => {
+                const localSets = snapshot.docs.map(doc => ({...doc.data(), docId: doc.id}));
+                console.log(localSets)
+                setSets(localSets);
+            })
+        })
+
         return () => {
             socket.disconnect();
+            unsubscribe();
         }
-
-        // xsc.register_event('player_join', (data) => {
-        //     // console.log("player_join:", data);
-        //     // console.log(players);
-        //     // data should be {playerId: playerId}
-        //     setPlayers(data.players)
-        //     // console.log(players)
-        //     // console.log(typeof players); // Should log "object"
-        //     // console.log(Array.isArray(players)); // should log "true"
-        // })
-        
-        // xsc.register_event("create_room", {});
     }, []);
 
     return ( 
     <div>
         <div className="row">
+            <h1>Logged in as {auth.currentUser?.displayName}</h1>
             <h1>Room {roomCode}</h1>
         </div>
         <div className="container">
@@ -64,7 +77,22 @@ function Room() {
         </div>
         <div>
             <h2>Set</h2>
-            
+            <h3>Chosen set: {gameSet.name}</h3>
+            <div className="row" id="setContainer">
+            {sets.map((setInfo, index) => {
+                console.log(setInfo)
+                // return <SetCard word={setInfo.name} key={index} setId={setInfo.id}/>
+                return <button className="m-1" key={index} onClick={() => {
+                    setGameSet(setInfo)
+                }}><h4>{setInfo.name}</h4></button>
+                })
+            }
+
+            { Object.keys(gameSet).length > 0 &&
+                <button><h2>Start Game</h2></button>
+            }
+
+        </div>
         </div>
 
     </div> );

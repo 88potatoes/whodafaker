@@ -16,7 +16,7 @@ function Dashboard() {
     const [sets, setSets] = useState<SetInfo[]>([])
 
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (!user) {
                 navigate('/login')
                 return;
@@ -37,6 +37,7 @@ function Dashboard() {
             })
         })
         
+        return () => unsubscribe();
     }, [])
 
     function handleLogout() {
@@ -89,3 +90,4 @@ function Dashboard() {
 }
 
 export default Dashboard;
+export type { SetInfo };
