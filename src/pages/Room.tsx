@@ -20,6 +20,7 @@ function Room() {
     const [gameSet, setGameSet] = useState<DocumentData>({})
     const [inGame, setInGame] = useState(false);
     const [words, setWords] = useState<string[]>([]);
+    const [numFakers, setNumFakers] = useState(1);
     const roomCode = params.roomCode;
     console.log(roomCode);
 
@@ -56,17 +57,23 @@ function Room() {
         })
 
         return () => {
+            socket.emit("close_room", {roomCode: roomCode})
             socket.disconnect();
             unsubscribe();
         }
     }, []);
 
     function handleStartGame() {
-        getDoc(doc(db, "sets", gameSet.docId))
-        .then(doc => {
-            setWords(doc.data().words)
-        })
+        if (players.length < 3) {
+            alert("need at least 3 players")
+            return;
+        }
+        setWords(gameSet.words)
         setInGame(true);
+    }
+
+    function handleCloseRoom() {
+        navigate("/dashboard")
     }
 
     return (
@@ -75,15 +82,32 @@ function Room() {
         <div className="row">
             <h1>Logged in as {auth.currentUser?.displayName}</h1>
             <h1>Room {roomCode}</h1>
+            <button className="col-3" onClick={handleCloseRoom}>Close Room</button>
         </div>
         <div className="container">
             <div className="row">
-                <h2>Players</h2>
-                <div className="col">
+                <div className="col-6">
+                    <h2>Players</h2>
                     {players.map((number, index) => {
                         return <div className="row" key={index}><h4>{number}</h4></div>
                     })}
-
+                </div>
+                <div className="col-6">
+                    <button onClick={() => {
+                        if (numFakers >= players.length) {
+                            alert("error: more fakers than players");
+                            return;
+                        }
+                        setNumFakers(numFakers + 1)
+                    }}>^</button>
+                    <h2>Fakers: {numFakers}</h2>
+                    <button onClick={() => {
+                        if (numFakers <= 1) {
+                            alert("error: there must be at least 1 faker")
+                            return;
+                        }
+                        setNumFakers(numFakers - 1)
+                    }}>v</button>
                 </div>
             </div>
         </div>

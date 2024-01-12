@@ -22,6 +22,11 @@ function InRoom() {
             }
         })
 
+        socket.on("room_close", () => {
+            alert("room has been closed");
+            navigate("/join")
+        })
+
         return () => {
             socket.disconnect();
         }
