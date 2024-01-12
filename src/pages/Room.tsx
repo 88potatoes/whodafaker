@@ -1,4 +1,4 @@
-import { DocumentData, collection, getDocs, query, where } from "firebase/firestore";
+import { DocumentData, collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { io } from "socket.io-client";
@@ -6,6 +6,7 @@ import { auth, db } from "../main";
 import { onAuthStateChanged } from "firebase/auth";
 import { SetInfo } from "./Dashboard";
 import SetCard from "../SetCard";
+import CardGrid from "../CardGrid";
 
 interface RoomProps {
     sets: SetInfo[]
@@ -17,6 +18,8 @@ function Room() {
     const [players, setPlayers] = useState<number[]>([])
     const [sets, setSets] = useState<DocumentData[]>([])
     const [gameSet, setGameSet] = useState<DocumentData>({})
+    const [inGame, setInGame] = useState(false);
+    const [words, setWords] = useState<string[]>([]);
     const roomCode = params.roomCode;
     console.log(roomCode);
 
@@ -58,7 +61,16 @@ function Room() {
         }
     }, []);
 
-    return ( 
+    function handleStartGame() {
+        getDoc(doc(db, "sets", gameSet.docId))
+        .then(doc => {
+            setWords(doc.data().words)
+        })
+        setInGame(true);
+    }
+
+    return (
+        !inGame ?
     <div>
         <div className="row">
             <h1>Logged in as {auth.currentUser?.displayName}</h1>
@@ -89,13 +101,18 @@ function Room() {
             }
 
             { Object.keys(gameSet).length > 0 &&
-                <button><h2>Start Game</h2></button>
+                <button onClick={handleStartGame}><h2>Start Game</h2></button>
             }
 
         </div>
         </div>
 
-    </div> );
+    </div> :
+    <div>
+        <CardGrid items={words}/>
+        <button onClick={() => {setInGame(false)}}>End Game</button>
+    </div>
+    );
 }
 
 export default Room;
