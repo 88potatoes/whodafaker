@@ -1,18 +1,30 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 
 function InRoom() {
     const params = useParams();
+    const navigate = useNavigate();
     const roomCode = params.roomCode;
 
     useEffect(() => {
         console.log("hook running!")
-        const socket = io("http://localhost:9090");
+        const socket = io("ws://localhost:9091");
         socket.on('connect', () => {
             console.log('Connected to the server!')
             socket.emit("join_room", {roomCode: roomCode})
         })
+
+        socket.on("join_status", (data) => {
+            if (data.status === "fail") {
+                alert(`failed to join room ${roomCode}`)
+                navigate("/join")
+            }
+        })
+
+        return () => {
+            socket.disconnect();
+        }
     }, [])
 
     return ( <div className="container">
