@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 
 function Room() {
     const params = useParams();
+    const navigate = useNavigate();
     const [players, setPlayers] = useState<number[]>([])
     const roomCode = params.roomCode;
     console.log(roomCode);
@@ -12,7 +13,15 @@ function Room() {
         const socket = io("ws://localhost:9091")
         socket.on('connect', () => {
             console.log("connected to server!")
-            socket.emit("join_room", {roomCode: roomCode})
+            socket.emit("join_room_host", {roomCode: roomCode})
+
+        })
+
+        socket.on("join_status", (data) => {
+            if (data.status === "fail") {
+                alert(`failed to join room ${roomCode}`)
+                navigate("/dashboard")
+            }
         })
 
         return () => {

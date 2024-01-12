@@ -11,6 +11,7 @@ function InRoom() {
         const socket = io("http://localhost:9090");
         socket.on('connect', () => {
             console.log('Connected to the server!')
+            socket.emit("join_room", {roomCode: roomCode})
         })
     }, [])
 
