@@ -1,18 +1,17 @@
-import { XSocketClient } from "phonesocket/xclient";
-import { ws_send } from "phonesocket";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { io } from "socket.io-client";
 
 function InRoom() {
     const params = useParams();
     const roomCode = params.roomCode;
 
     useEffect(() => {
-        const xsc = new XSocketClient('phone', "ws://localhost:9090");
-
-        xsc.onopen = () => {
-            ws_send(xsc, "join_room", {roomCode: roomCode})
-        }
+        console.log("hook running!")
+        const socket = io("http://localhost:9090");
+        socket.on('connect', () => {
+            console.log('Connected to the server!')
+        })
     }, [])
 
     return ( <div className="container">

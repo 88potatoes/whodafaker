@@ -1,7 +1,6 @@
-import { ws_send } from "phonesocket";
-import { XSocketClient } from "phonesocket/xclient";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { io } from "socket.io-client";
 
 function Room() {
     const params = useParams();
@@ -10,22 +9,25 @@ function Room() {
     console.log(roomCode);
 
     useEffect(() => {
-        const xsc = new XSocketClient('phone', "ws://localhost:9090");
+        const socket = io("ws://localhost:9091")
+        socket.on('connect', () => {
+            console.log("connected to server!")
+            socket.emit("join_room", {roomCode: roomCode})
+        })
 
-        xsc.onopen = () => {
-            ws_send(xsc, "join_room_host", {roomCode: roomCode})
-            console.log("opened")
+        return () => {
+            socket.disconnect();
         }
 
-        xsc.register_event('player_join', (data) => {
-            // console.log("player_join:", data);
-            // console.log(players);
-            // data should be {playerId: playerId}
-            setPlayers(data.players)
-            // console.log(players)
-            // console.log(typeof players); // Should log "object"
-            // console.log(Array.isArray(players)); // should log "true"
-        })
+        // xsc.register_event('player_join', (data) => {
+        //     // console.log("player_join:", data);
+        //     // console.log(players);
+        //     // data should be {playerId: playerId}
+        //     setPlayers(data.players)
+        //     // console.log(players)
+        //     // console.log(typeof players); // Should log "object"
+        //     // console.log(Array.isArray(players)); // should log "true"
+        // })
         
         // xsc.register_event("create_room", {});
     }, []);
