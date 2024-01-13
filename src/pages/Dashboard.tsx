@@ -21,7 +21,7 @@ function Dashboard() {
                 navigate('/login')
                 return;
             }
-            const q = query(collection(db, "sets"), where("id", "==", auth.currentUser.uid), limit(4))
+            const q = query(collection(db, "sets"), where("id", "==", auth.currentUser.uid))
             getDocs(q)
             .then(snapshot => {
                 const localSets: SetInfo[] = []

@@ -15,6 +15,10 @@ function InRoom() {
     const roomCode = params.roomCode;
 
     useEffect(() => {
+        if (username == null) {
+            alert("error: no username")
+            navigate("/join")
+        }
         console.log("hook running!")
         const socket = io("ws://localhost:9091");
         socket.on('connect', () => {
