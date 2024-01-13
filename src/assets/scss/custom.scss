@@ -47,9 +47,20 @@ html, body {
 }
 
 .whitecontainer {
-    background-color: #fff;
-    opacity: 0.8;
-    padding: 1.5rem;
+    position: relative;
+    background-position: center;
+    z-index: 1;
+    
+    &::before {
+        content: "";
+        background-color: #fff;
+        opacity: 0.8;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        position: absolute;
+        display: block;
+    }
 }
 
 .interactive_text {
