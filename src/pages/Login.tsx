@@ -1,4 +1,4 @@
-import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { GoogleAuthProvider, getRedirectResult, onAuthStateChanged, signInWithEmailAndPassword, signInWithRedirect } from "firebase/auth";
 import { FormEvent, useEffect } from "react";
 import { auth } from "../main";
 import { Link, useNavigate } from "react-router-dom";
@@ -32,14 +32,25 @@ function Login() {
         })
     }
 
+    function googleLogin() {
+        const googleProvider = new GoogleAuthProvider();
+        signInWithRedirect(auth, googleProvider)
+        
+        getRedirectResult(auth)
+        .then(cred => {
+            console.log(cred.user)
+        })
+    }
+
     return ( 
-    <div className="container">
-        <div className="row">
+    <div>
+        <div className="row whitecontainer">
             <div className="col d-flex flex-column justify-content-center text-center align-items-center">
                 <div>
-                    <h1>Login</h1>
+                    <h1>Who's the Faker?</h1>
+                    <h2>Login</h2>
                 </div>
-                <form onSubmit={emailLogin} className="d-flex flex-column col-6 justify-content-center align-items-center mb-5">
+                <form onSubmit={emailLogin} className="d-flex flex-column col-6 justify-content-center align-items-center mb-2 w-100">
                     <div className="d-flex flex-column align-items-start">
                         <label htmlFor="email">Email</label>
                         <input type="email" id="email" required/>
@@ -54,18 +65,20 @@ function Login() {
                 </form>
 
                 <div className="m-2">
-                    <button id="GoogleSignIn">Sign in with Google</button>
+                    <button id="GoogleSignIn" onClick={googleLogin}>Sign in with Google</button>
                 </div>
                 <div className="m-2">
                     <Link to="/">
                         <button id="HomeButton">Home</button>
                     </Link>
                 </div>
-                <div className="m-2">No Account?
+                <div className="d-flex">
+                    <div className="m-2"><p>No Account?</p></div>
 
-                    <Link to="/signup">
-                        <button id="SignupButton">Sign up</button>
-                    </Link>
+                        <Link to="/signup">
+                            <button id="SignupButton">Sign up</button>
+                        </Link>
+
                 </div>
             </div>
         </div>
