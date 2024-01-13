@@ -105,72 +105,80 @@ function Room() {
 
     return (
         !inGame ?
-    <div>
-        <div className="row">
-            <h1>Logged in as {auth.currentUser?.displayName}</h1>
-            <h1>Room {roomCode}</h1>
-            <button className="col-3" onClick={handleCloseRoom}>Close Room</button>
-        </div>
-        <div className="container">
-            <div className="row">
-                <div className="col-6">
-                    <h2>Players</h2>
-                    {players.map((number, index) => {
-                        return <div className="row" key={index}><h4>{number}</h4></div>
-                    })}
+    <div className="container whitecontainer">
+        <div className="m-4">
+            <div className="mb-3">
+                <h1>Room: {roomCode}</h1>
+                <h3>Logged in as {auth.currentUser?.displayName}</h3>
+                <button className="col-3" onClick={handleCloseRoom}>Close Room</button>
+            </div>
+            <div className="container secondarysection mb-3">
+                <div className="row p-4">
+                    <div className="col-3 d-flex flex-column justify-content-center align-items-center">
+                        <div className="d-flex flex-column justify-content-center align-items-center">
+                            <button onClick={() => {
+                                if (numFakers >= players.length) {
+                                    alert("error: more fakers than players");
+                                    return;
+                                }
+                                setNumFakers(numFakers + 1)
+                            }}>+</button>
+                            <h2>Fakers: <strong>{numFakers}</strong></h2>
+                            <button onClick={() => {
+                                if (numFakers <= 1) {
+                                    alert("error: there must be at least 1 faker")
+                                    return;
+                                }
+                                setNumFakers(numFakers - 1)
+                            }}>-</button>
+                        </div>
+                    </div>
+                    <div className="col-9">
+                        <h2>Players</h2>
+                        <div className="row">
+                            {players.map((number, index) => {
+                                return <div className="col-4" key={index}><div className="m-2 bg-primary text-center rounded p-2"><h4 className="mb-1">{number}</h4></div></div>
+                            })}
+                        </div>
+                    </div>
                 </div>
-                <div className="col-6">
+            </div>
+            <div className="container">
+                <h2>Choose a set</h2>
+                <div className="row" id="setContainer">
+                    
+                {/* edit buttons */}
+                {sets.map((setInfo, index) => {
+                    return ( 
+                        <div key={index} className="bg-secondary col-4 m-2">
+                            <div className="p-2 d-flex flex-column justify-content-around align-items-center">
+                                <div className="m-1 hoverablecard" onClick={() => {
+                                    setGameSet(setInfo)
+                                    setWords(setInfo.words)
+                                }}><h4>{setInfo.name}</h4></div>
+                                <div className="hoverablecard" onClick={() => {handleEdit(setInfo.docId)}}>edit</div>
+                            </div>
+
+                        </div>)
+                    })
+                }
+                <h3>Chosen set: <strong>{gameSet.name}</strong></h3>
+                
+                <dialog id="setEdit">
+                    <CreateSet setId={editSetId} fromRoom={true}/>
                     <button onClick={() => {
-                        if (numFakers >= players.length) {
-                            alert("error: more fakers than players");
-                            return;
-                        }
-                        setNumFakers(numFakers + 1)
-                    }}>^</button>
-                    <h2>Fakers: {numFakers}</h2>
-                    <button onClick={() => {
-                        if (numFakers <= 1) {
-                            alert("error: there must be at least 1 faker")
-                            return;
-                        }
-                        setNumFakers(numFakers - 1)
-                    }}>v</button>
+                        setEdit.close();
+                        // setEditSetId("")
+                    }}>Close edit</button>
+                </dialog>
+
+                { Object.keys(gameSet).length > 0 &&
+                    <button onClick={handleStartGame}><h2>Start Game</h2></button>
+                }
+
                 </div>
             </div>
         </div>
-        <div>
-            <h2>Set</h2>
-            <h3>Chosen set: {gameSet.name}</h3>
-            <div className="row" id="setContainer">
-                
-            {/* edit buttons */}
-            {sets.map((setInfo, index) => {
-                return ( <div key={index}>
-                    <button className="m-1" onClick={() => {
-                        setGameSet(setInfo)
-                        setWords(setInfo.words)
-                    }}><h4>{setInfo.name}</h4></button>
-
-                    <button onClick={() => {handleEdit(setInfo.docId)}}>edit</button>
-                </div>)
-                })
-            }
-            
-            <dialog id="setEdit">
-                <CreateSet setId={editSetId} fromRoom={true}/>
-                <button onClick={() => {
-                    setEdit.close();
-                    // setEditSetId("")
-                }}>Close edit</button>
-            </dialog>
-
-            { Object.keys(gameSet).length > 0 &&
-                <button onClick={handleStartGame}><h2>Start Game</h2></button>
-            }
-
-        </div>
-        </div>
-
     </div> :
     <div>
         <CardGrid items={words} deletable={false} delete={() => {}}/>

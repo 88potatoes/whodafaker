@@ -110,38 +110,44 @@ function CreateSet({ setId = "", fromRoom = false }) {
     }
 
     return ( 
-    <div>
-        <Link to="/dashboard">
-            <button>Dashboard</button>
-        </Link>
+    <div className="container whitecontainer">
+        <div className="row m-2">
+            <Link to="/dashboard">
+                <button>Dashboard</button>
+            </Link>
+        </div>
         <div className="row">
             <h1>Logged in as {auth.currentUser?.displayName}</h1>
         </div>
         <div className="row">
-            <h4>setName</h4>
-            <input type="text" value={setName} onChange={(e) => {
-                setSetName(e.target.value);
-            }}/>
-            <form id="wordForm" onSubmit={handleNewWord}>
-                <label htmlFor="wordentry"><h4>Add word</h4> </label>
-                <input type="text" id="wordentry"/>
+            <div className="col-6 d-flex">
+                <h4 className="p-1">Set Name</h4>
+                <input type="text" value={setName} onChange={(e) => {
+                    setSetName(e.target.value);
+                }}/>
+
+            </div>
+        </div>
+        <div className="row">
+            <form id="wordForm" onSubmit={handleNewWord} className="col-6">
+                <label htmlFor="wordentry"><h4>Add word</h4></label>
+                <input type="text" id="wordentry" className="m-1"/>
                 <input type="submit" />
             </form>
-
         </div>
         <div className="row">
             <CardGrid items={words} deletable={true} delete={(cardword: string) => {
                 setWords(words.filter(word => word != cardword))
             }}/>
         </div>
-        <div className="m-2">
-            <button onClick={saveSet}>Save</button>
+        <div className="row m-2">
+            <button onClick={saveSet} className="col-6">Save set</button>
         </div>
         {/* <div className="m-2">
             <button>Start Game</button>
         </div> */}
-        <div>
-            <button onClick={() =>{
+        <div className="row m-2">
+            <button className="col-6" onClick={() =>{
                 confirmation.showModal();
             }}>Delete Set</button>
             <dialog id="setDeleteConfirm">

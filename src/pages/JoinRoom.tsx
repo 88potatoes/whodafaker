@@ -28,25 +28,27 @@ function JoinRoom() {
 
     }
 
-    return ( <div className="container">
-        <div className="row">
-            <div className="col">
-                <h1>Join Room</h1>
+    return ( <div className="whitecontainer">
+        <div className="m-4">
+            <div className="row">
+                <div className="col">
+                    <h1>Join Room</h1>
+                </div>
             </div>
-        </div>
-        <div className="row">
-            <div className="col">
-                <form onSubmit={JoinRoom}>
-                    <div>
-                        <label htmlFor="username">Display name</label>
-                        <input type="text" id="username" required/>
-                    </div>
-                    <div>
-                        <label htmlFor="roomcode">Room code</label>
-                        <input type="text" id="roomcode" required/>
-                    </div>
-                    <input type="submit" value="Join Room" />
-                </form>
+            <div className="row">
+                <div className="col">
+                    <form onSubmit={JoinRoom}>
+                        <div>
+                            <label htmlFor="username">Display name</label>
+                            <input type="text" id="username" required/>
+                        </div>
+                        <div>
+                            <label htmlFor="roomcode">Room code</label>
+                            <input type="text" id="roomcode" required/>
+                        </div>
+                        <input type="submit" value="Join Room" />
+                    </form>
+                </div>
             </div>
         </div>
     </div> );
