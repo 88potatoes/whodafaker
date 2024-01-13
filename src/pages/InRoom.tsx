@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 
 function InRoom() {
@@ -8,6 +8,10 @@ function InRoom() {
     const [revealed, setRevealed] = useState(false);
     const navigate = useNavigate();
     const [HiddenElement, setHiddenElement] = useState(<></>)
+    const location = useLocation();
+
+    console.log("location", location)
+    const username = location.state;
     const roomCode = params.roomCode;
 
     useEffect(() => {
@@ -15,7 +19,7 @@ function InRoom() {
         const socket = io("ws://localhost:9091");
         socket.on('connect', () => {
             console.log('Connected to the server!')
-            socket.emit("join_room", {roomCode: roomCode})
+            socket.emit("join_room", {roomCode: roomCode, username: username})
         })
 
         socket.on("join_status", (data) => {
@@ -59,6 +63,9 @@ function InRoom() {
     }
 
     return ( <div className="container">
+        <div className="row">
+            <h2>You are {username}</h2>
+        </div>
         <div className="row">
             <div className="col">
                 {!inGame ?

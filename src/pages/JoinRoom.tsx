@@ -7,15 +7,20 @@ function JoinRoom() {
         e.preventDefault();
         const roomCodeElement = document.getElementById('roomcode') as HTMLInputElement;
         const roomCode = roomCodeElement.value.toUpperCase();
+        const usernameElement = document.getElementById('username') as HTMLInputElement;
+        const username = usernameElement.value;
 
         console.log(roomCode)
 
-        fetch(`http://localhost:9000/join/${roomCode}`)
+        const queryString = new URLSearchParams({username: username}).toString();
+        console.log(queryString);
+
+        fetch(`http://localhost:9000/join/${roomCode}?${queryString}`)
         .then(res => res.json())
         .then(body => {
             const { status } = body;
             if (status == "good") {
-                navigate(`/joined/${roomCode}`)
+                navigate(`/joined/${roomCode}`, { state: username })
             } else if (status == "noRoomCode") {
                 alert("No room with that code exists")
             }
@@ -32,8 +37,14 @@ function JoinRoom() {
         <div className="row">
             <div className="col">
                 <form onSubmit={JoinRoom}>
-                    <label htmlFor="roomcode">Room code</label>
-                    <input type="text" id="roomcode"/>
+                    <div>
+                        <label htmlFor="username">Display name</label>
+                        <input type="text" id="username" required/>
+                    </div>
+                    <div>
+                        <label htmlFor="roomcode">Room code</label>
+                        <input type="text" id="roomcode" required/>
+                    </div>
                     <input type="submit" value="Join Room" />
                 </form>
             </div>
