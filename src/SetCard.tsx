@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface setProps {
     word: string,
@@ -6,15 +6,17 @@ interface setProps {
 }
 
 function SetCard(props: setProps) {
-    const linkTo = `/createset/${props.setId}`
+    const linkTo = `/createset/${props.setId}`;
+    const navigate = useNavigate();
     return ( 
-        <Link to={linkTo}>
-            <div className="col-3">
-                <div className="col-10 bg-warning">
-                    <h2>{props.word}</h2>
-                </div>
-            </div>    
-        </Link>
+        <div onClick={() => {
+            navigate(linkTo)
+        }} 
+        className="col-3 d-flex flex-column justify-content-center align-items-center p-1 m-1 bg-primary rounded hoverablecard">
+            <div>
+                <h2 className="text-black">{props.word}</h2>
+            </div>
+        </div>    
      );
 }
 

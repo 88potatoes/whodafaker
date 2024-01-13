@@ -13029,7 +13029,7 @@ html, body {
   height: 100%;
 }
 
-*, *::before, *::after {
+*, *::before, *::after, *:hover {
   box-sizing: border-box;
 }
 
@@ -13056,4 +13056,13 @@ html, body {
   background-color: #fff;
   opacity: 0.8;
   padding: 1.5rem;
+}
+
+.interactive_text:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.hoverablecard:hover {
+  cursor: pointer;
 }
