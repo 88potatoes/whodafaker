@@ -1,6 +1,6 @@
-import { FormEvent, useEffect, useState } from "react";
+import { DialogHTMLAttributes, FormEvent, useEffect, useState } from "react";
 import CardGrid from "../CardGrid";
-import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../main";
 import { onAuthStateChanged } from "firebase/auth";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -18,6 +18,7 @@ function CreateSet({ setId = "" }) {
     const navigate = useNavigate();
 
     const formElement = document.getElementById('wordForm') as HTMLFormElement;
+    const confirmation = document.getElementById("setDeleteConfirm") as HTMLDialogElement;
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
@@ -100,8 +101,26 @@ function CreateSet({ setId = "" }) {
         <div className="m-2">
             <button onClick={saveSet}>Save</button>
         </div>
-        <div className="m-2">
+        {/* <div className="m-2">
             <button>Start Game</button>
+        </div> */}
+        <div>
+            <button onClick={() =>{
+                confirmation.showModal();
+            }}>Delete Set</button>
+            <dialog id="setDeleteConfirm">
+                <p>Confirm delete set?</p>
+                <button onClick={() => {
+                    deleteDoc(doc(collection(db, "sets"), finalSetId))
+                    .then(() => {
+                        confirmation.close();
+                        navigate("/dashboard")
+                    })
+                }}>Yes</button>
+                <button onClick={() => {
+                    confirmation.close();
+                }}>No</button>
+            </dialog>
         </div>
     </div> );
 }
