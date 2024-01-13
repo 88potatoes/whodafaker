@@ -9,14 +9,13 @@ interface CreateSetProps {
     setId: string
 }
 
-function CreateSet({ setId = "" }) {
+function CreateSet({ setId = "", fromRoom = false }) {
     console.log("setId:", setId)
     const { setId: paramSetId } = useParams();
     console.log("paramSetId:", paramSetId)
     // const finalSetId = setId || paramSetId;
     console.log(paramSetId ? paramSetId : setId)
-    const [finalSetId, setFinalSetId] = useState( paramSetId ? paramSetId : setId)
-    console.log("initial finalSetId: ", finalSetId);
+    // const [finalSetId, setFinalSetId] = useState( paramSetId ? paramSetId : setId)
     const [words, setWords] = useState<string[]>([])
     const [setName, setSetName] = useState("")
     const navigate = useNavigate();
@@ -31,10 +30,27 @@ function CreateSet({ setId = "" }) {
             }
         })
 
-        console.log("finalSetId", finalSetId)
-        if (finalSetId) {
-            console.log(finalSetId)
-            const docRef = doc(db, "sets", finalSetId)
+
+        if (fromRoom) {
+            if (setId) {
+                console.log("came from room: ", setId)
+                const docRef = doc(db, "sets", setId)
+                console.log("docRef:", docRef)
+                getDoc(docRef)
+                .then(doc => {
+                    console.log("docdata:", doc.data())
+                    setWords(doc.data().words)
+                    setSetName(doc.data().name)
+                })
+            } else {
+                return;
+            }
+
+        }
+
+        console.log("finalSetId", paramSetId)
+        if (paramSetId && !fromRoom) {
+            const docRef = doc(collection(db, "sets"), paramSetId)
             getDoc(docRef)
             .then(doc => {
                 console.log("docdata:", doc.data())
@@ -46,7 +62,7 @@ function CreateSet({ setId = "" }) {
         return () => {
             unsubscribe();
         }
-    }, [finalSetId])
+    }, [setId])
 
 
     function handleNewWord(e: FormEvent) {
@@ -62,8 +78,18 @@ function CreateSet({ setId = "" }) {
     }
 
     function saveSet() {
-        if (finalSetId) {
-            const docRef = doc(db, "sets", finalSetId)
+        if (fromRoom && setId) {
+            const docRef = doc(db, "sets", setId)
+            setDoc(docRef, {
+                words: words,
+                id: auth.currentUser.uid,
+                name: setName
+            })
+            return;
+        }
+
+        if (paramSetId) {
+            const docRef = doc(db, "sets", paramSetId)
             setDoc(docRef, {
                 words: words,
                 id: auth.currentUser.uid,
@@ -121,7 +147,7 @@ function CreateSet({ setId = "" }) {
             <dialog id="setDeleteConfirm">
                 <p>Confirm delete set?</p>
                 <button onClick={() => {
-                    deleteDoc(doc(collection(db, "sets"), finalSetId))
+                    deleteDoc(doc(collection(db, "sets"), paramSetId))
                     .then(() => {
                         confirmation.close();
                         navigate("/dashboard")

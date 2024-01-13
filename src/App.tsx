@@ -17,7 +17,7 @@ function App() {
       <Route path="/login" element={ <Login/> }/>
       <Route path="/signup" element={ <Signup/>}/>
       <Route path="/dashboard" element={  <Dashboard/> }/>
-      <Route path="/createset/" element={ <CreateSet setId=""/> }/>
+      <Route path="/createset/" element={ <CreateSet/> }/>
       <Route path="/createset/:setId" element={ <CreateSet/> }/>
       <Route path="/room/:roomCode" element={ <Room/> }/>
       <Route path="/join" element={ <JoinRoom/> }/>

@@ -96,6 +96,13 @@ function Room() {
         navigate("/dashboard")
     }
 
+    function handleEdit(setid: string) {
+        if (editSetId != setid) {
+            setEditSetId(setid)
+        }
+        setEdit.showModal();
+    }
+
     return (
         !inGame ?
     <div>
@@ -135,6 +142,8 @@ function Room() {
             <h2>Set</h2>
             <h3>Chosen set: {gameSet.name}</h3>
             <div className="row" id="setContainer">
+                
+            {/* edit buttons */}
             {sets.map((setInfo, index) => {
                 return ( <div key={index}>
                     <button className="m-1" onClick={() => {
@@ -142,17 +151,16 @@ function Room() {
                         setWords(setInfo.words)
                     }}><h4>{setInfo.name}</h4></button>
 
-                    <button onClick={() => {
-                        setEditSetId(setInfo.docId)
-                    }}>edit</button>
+                    <button onClick={() => {handleEdit(setInfo.docId)}}>edit</button>
                 </div>)
                 })
             }
             
             <dialog id="setEdit">
-                <CreateSet setId={editSetId}/>
+                <CreateSet setId={editSetId} fromRoom={true}/>
                 <button onClick={() => {
                     setEdit.close();
+                    // setEditSetId("")
                 }}>Close edit</button>
             </dialog>
 
