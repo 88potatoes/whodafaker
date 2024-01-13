@@ -7,6 +7,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { SetInfo } from "./Dashboard";
 import SetCard from "../SetCard";
 import CardGrid from "../CardGrid";
+import CreateSet from "./CreateSet";
 
 interface RoomProps {
     sets: SetInfo[]
@@ -18,12 +19,14 @@ function Room() {
     const [players, setPlayers] = useState<number[]>([])
     const [sets, setSets] = useState<DocumentData[]>([])
     const [gameSet, setGameSet] = useState<DocumentData>({})
+    const [editSetId, setEditSetId] = useState("");
     const [inGame, setInGame] = useState(false);
     const [words, setWords] = useState<string[]>([]);
     const [numFakers, setNumFakers] = useState(1);
     const [socket, setSocket] = useState<Socket | null>(null);
 
     const roomCode = params.roomCode;
+    const setEdit = document.getElementById("setEdit") as HTMLDialogElement;
 
     useEffect(() => {
         const newsocket = io("ws://localhost:9091")
@@ -66,6 +69,13 @@ function Room() {
             setSocket(null);
         }
     }, []);
+
+    useEffect(() => {
+        console.log("editing", editSetId)
+        if (setEdit) {
+            setEdit.showModal();
+        }
+    }, [editSetId])
 
     function handleStartGame() {
         if (players.length < 3) {
@@ -126,12 +136,25 @@ function Room() {
             <h3>Chosen set: {gameSet.name}</h3>
             <div className="row" id="setContainer">
             {sets.map((setInfo, index) => {
-                return <button className="m-1" key={index} onClick={() => {
-                    setGameSet(setInfo)
-                    setWords(setInfo.words)
-                }}><h4>{setInfo.name}</h4></button>
+                return ( <div key={index}>
+                    <button className="m-1" onClick={() => {
+                        setGameSet(setInfo)
+                        setWords(setInfo.words)
+                    }}><h4>{setInfo.name}</h4></button>
+
+                    <button onClick={() => {
+                        setEditSetId(setInfo.docId)
+                    }}>edit</button>
+                </div>)
                 })
             }
+            
+            <dialog id="setEdit">
+                <CreateSet setId={editSetId}/>
+                <button onClick={() => {
+                    setEdit.close();
+                }}>Close edit</button>
+            </dialog>
 
             { Object.keys(gameSet).length > 0 &&
                 <button onClick={handleStartGame}><h2>Start Game</h2></button>

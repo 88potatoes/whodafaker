@@ -10,9 +10,13 @@ interface CreateSetProps {
 }
 
 function CreateSet({ setId = "" }) {
+    console.log("setId:", setId)
     const { setId: paramSetId } = useParams();
-    const finalSetId = setId || paramSetId;
-    const isNew = finalSetId ? false : true;
+    console.log("paramSetId:", paramSetId)
+    // const finalSetId = setId || paramSetId;
+    console.log(paramSetId ? paramSetId : setId)
+    const [finalSetId, setFinalSetId] = useState( paramSetId ? paramSetId : setId)
+    console.log("initial finalSetId: ", finalSetId);
     const [words, setWords] = useState<string[]>([])
     const [setName, setSetName] = useState("")
     const navigate = useNavigate();
@@ -21,22 +25,28 @@ function CreateSet({ setId = "" }) {
     const confirmation = document.getElementById("setDeleteConfirm") as HTMLDialogElement;
 
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (!user) {
                 navigate("/login")
             }
         })
 
+        console.log("finalSetId", finalSetId)
         if (finalSetId) {
+            console.log(finalSetId)
             const docRef = doc(db, "sets", finalSetId)
             getDoc(docRef)
             .then(doc => {
-                console.log(doc.data())
+                console.log("docdata:", doc.data())
                 setWords(doc.data().words)
                 setSetName(doc.data().name)
             })
         }
-    }, [])
+        
+        return () => {
+            unsubscribe();
+        }
+    }, [finalSetId])
 
 
     function handleNewWord(e: FormEvent) {
