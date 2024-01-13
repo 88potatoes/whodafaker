@@ -74,9 +74,13 @@ function Dashboard() {
             }
         </div>
         <div className="row">
-            <Link to="/createset">
-                <button>Create New Set</button>
-            </Link>
+                <button onClick={() => {
+                    if (sets.length >= 5) {
+                        alert("max of 5 sets. please delete one to make another")
+                    } else {
+                        navigate("/createset")
+                    }
+                }}>Create New Set</button>
         </div>
         <div className="row m-2">
             <button onClick={handleLogout}>Logout</button>
