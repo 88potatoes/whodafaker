@@ -69,6 +69,7 @@ function CreateSet({ setId = "" }) {
                 navigate(`/createset/${doc.id}`)
             })
         }
+        alert("set saved")
     }
 
     return ( 
@@ -92,7 +93,9 @@ function CreateSet({ setId = "" }) {
 
         </div>
         <div className="row">
-            <CardGrid items={words}/>
+            <CardGrid items={words} deletable={true} delete={(cardword: string) => {
+                setWords(words.filter(word => word != cardword))
+            }}/>
         </div>
         <div className="m-2">
             <button onClick={saveSet}>Save</button>

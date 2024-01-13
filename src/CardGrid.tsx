@@ -1,7 +1,9 @@
 import Card from "./Card";
 
 interface cardGridProps {
-    items: string[]
+    items: string[],
+    deletable: boolean,
+    delete: Function
 }
 
 function CardGrid(props: cardGridProps) {
@@ -9,7 +11,7 @@ function CardGrid(props: cardGridProps) {
     return (
     <div className="container row gx-3">
         {props.items.map((item, index) => {
-            return <Card word={item} key={index}/>
+            return <Card word={item} key={index} deletable={props.deletable} delete={props.delete}/>
         })}
     </div>
     );

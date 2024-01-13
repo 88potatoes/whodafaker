@@ -1,5 +1,9 @@
+import { isButtonElement } from "react-router-dom/dist/dom";
+
 interface CardProps {
-    word: string;
+    word: string, 
+    deletable: boolean,
+    delete: Function
 }
 
 function Card(props: CardProps) {
@@ -7,6 +11,9 @@ function Card(props: CardProps) {
         <div className="col bg-info py-3">
             {props.word}
         </div>
+        { props.deletable &&
+            <button onClick={() => {props.delete(props.word)}}>X</button>
+        }
     </div>
 }
 
