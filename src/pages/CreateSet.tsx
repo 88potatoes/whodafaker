@@ -111,45 +111,41 @@ function CreateSet({ setId = "", fromRoom = false }) {
 
     return ( 
     <div className="container whitecontainer">
-        <div className="row m-2">
-            <Link to="/dashboard">
-                <button>Dashboard</button>
-            </Link>
-        </div>
-        <div className="row">
-            <h1>Logged in as {auth.currentUser?.displayName}</h1>
-        </div>
-        <div className="row">
-            <div className="col-6 d-flex">
-                <h4 className="p-1">Set Name</h4>
-                <input type="text" value={setName} onChange={(e) => {
-                    setSetName(e.target.value);
-                }}/>
+        <div className="m-4">
+            <div className="container mb-4">
+                <div className="m-2 d-flex align-items-center justify-content-between">
+                    <button onClick={() => {navigate("/dashboard")}}>&lt; Dashboard</button>
+                    <h3 className="float-right">{auth.currentUser?.displayName}</h3>
+                </div>
+            </div>
+            <div className="row m-2">
+                <form className="col-6">
+                    <label htmlFor=""><h4 className="m-1">Set Name</h4></label>
+                    <input type="text" value={setName} onChange={(e) => {
+                        setSetName(e.target.value);
+                    }}/>
+                </form>
 
+                <form id="wordForm" onSubmit={handleNewWord} className="col-6">
+                    <label htmlFor="wordentry"><h4 className="m-1">Add word</h4></label>
+                    <input type="text" id="wordentry" className="m-1"/>
+                    <input type="submit" />
+                </form>
+            </div>
+            <div className="row">
+            </div>
+        <div className="container">
+            <div className="row">
+                <CardGrid items={words} deletable={true} delete={(cardword: string) => {
+                    setWords(words.filter(word => word != cardword))
+                }}/>
             </div>
         </div>
-        <div className="row">
-            <form id="wordForm" onSubmit={handleNewWord} className="col-6">
-                <label htmlFor="wordentry"><h4>Add word</h4></label>
-                <input type="text" id="wordentry" className="m-1"/>
-                <input type="submit" />
-            </form>
-        </div>
-        <div className="row">
-            <CardGrid items={words} deletable={true} delete={(cardword: string) => {
-                setWords(words.filter(word => word != cardword))
-            }}/>
-        </div>
         <div className="row m-2">
-            <button onClick={saveSet} className="col-6">Save set</button>
-        </div>
-        {/* <div className="m-2">
-            <button>Start Game</button>
-        </div> */}
-        <div className="row m-2">
-            <button className="col-6" onClick={() =>{
+            <button onClick={saveSet} className="col-5 m-1"><div className="m-2">Save Set</div></button>
+            <button className="col-5 m-1" onClick={() =>{
                 confirmation.showModal();
-            }}>Delete Set</button>
+            }}><div className="m-2">Delete Set</div></button>
             <dialog id="setDeleteConfirm">
                 <p>Confirm delete set?</p>
                 <button onClick={() => {
@@ -163,6 +159,11 @@ function CreateSet({ setId = "", fromRoom = false }) {
                     confirmation.close();
                 }}>No</button>
             </dialog>
+        </div>
+        {/* <div className="m-2">
+            <button>Start Game</button>
+        </div> */}
+
         </div>
     </div> );
 }

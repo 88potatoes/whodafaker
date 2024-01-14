@@ -7,17 +7,13 @@ $primary: #2f5f32;
 $theme-colors: map-merge($theme-colors, (
   "primary": $primary
 ));
-
-#root {
+  
+html {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     height: 100%;
 }
-  
-html, body {
+
+body {
     width: 100%;
     height: 100%;
 }
@@ -33,6 +29,13 @@ html, body {
     background-size: cover;
     position: relative;
     z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
 
     &::before {
         content: "";

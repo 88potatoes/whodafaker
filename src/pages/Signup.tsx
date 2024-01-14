@@ -41,24 +41,31 @@ function Signup() {
     return ( <div className="container">
         <div className="row">
             <div className="col d-flex flex-column justify-content-center text-center align-items-center">
-                <h1>Signup</h1>
-                <form onSubmit={emailSignup} className="d-flex flex-column col-6 justify-content-center align-items-center mb-5">
-                    <div className="d-flex flex-column align-items-start">
-                        <label htmlFor="username">Username</label>
-                        <input type="text" id="username" required/>
+                <div className="whitecontainer">
+                    <div className="m-4">
+                        <div className="hoverablecard text-start" onClick={() => {
+                            navigate("/login")
+                        }}><strong>&lt;</strong></div>
+                        <h1>Signup</h1>
+                        <form onSubmit={emailSignup} className="d-flex flex-column col-6 justify-content-center align-items-center mb-5 w-100">
+                            <div className="d-flex flex-column align-items-start">
+                                <label htmlFor="username">Username</label>
+                                <input type="text" id="username" required/>
+                            </div>
+                            <div className="d-flex flex-column align-items-start">
+                                <label htmlFor="email">Email</label>
+                                <input type="email" id="email" required/>
+                            </div>
+                            <div className="d-flex flex-column align-items-start">
+                                <label htmlFor="password">Password</label>
+                                <input type="password" id="password" required/>
+                            </div>
+                            <div className="m-2">
+                                <input type="submit" value="Sign Up"/>
+                            </div>
+                        </form>
                     </div>
-                    <div className="d-flex flex-column align-items-start">
-                        <label htmlFor="email">Email</label>
-                        <input type="email" id="email" required/>
-                    </div>
-                    <div className="d-flex flex-column align-items-start">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" id="password" required/>
-                    </div>
-                    <div className="m-2">
-                        <input type="submit" value="Sign Up"/>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </div> );
