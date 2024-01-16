@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SetCard from "../SetCard";
 import { auth, db } from "../main";
+import Header from "../components/Header";
 
 interface SetInfo {
     name: string,
@@ -62,35 +63,35 @@ function Dashboard() {
     return ( 
     <div className="container whitecontainer">
         <div className="m-4">
-            <div className="row align-items-center m-2">
-                <div className="col-9">
-                    <h1>Who's the Faker?</h1>
-                </div>
-                <div className="col-3 text-end">
-                    <h3>{auth.currentUser?.displayName}</h3>
-                    <h4 onClick={handleLogout} className="interactive_text">Logout</h4>    
-                </div>
-            </div>
-            
+            <Header username={auth.currentUser?.displayName}/>
+        
             <div className="row m-3" id="setContainer">
-                <h2>Your sets</h2>
-                {sets.map((setInfo, index) => {
-                    console.log(setInfo)
-                    return <SetCard word={setInfo.name} key={index} setId={setInfo.id}/>
-                    })
-                }
-                <button className="col-3 m-1 p-1" onClick={() => {
-                    if (sets.length >= 5) {
-                        alert("max of 5 sets. please delete one to make another")
-                    } else {
-                        navigate("/createset")
+                <div>
+                    <h2>Your sets</h2>
+                </div>
+                <div className="row">
+                    {sets.map((setInfo, index) => {
+                        console.log(setInfo)
+                        return <SetCard word={setInfo.name} key={index} setId={setInfo.id}/>
+                        })
                     }
-                }}>Create New Set</button>
+                    <div className="col-3 d-flex flex-column justify-content-center align-items-center">
+                        <div onClick={() => {
+                            if (sets.length >= 5) {
+                                alert("max of 5 sets. please delete one to make another")
+                            } else {
+                                navigate("/createset")
+                            }
+                        }} className="col-11 bg-black rounded hoverablecard text-center my-2 py-5">
+                            <h2 className="text-white">Create New Set</h2>
+                        </div>
+                    </div>    
+                </div>
             </div>
             
             <div className="row m-3">
                 <div className="col">
-                    <button onClick={handleNewRoom} className="w-100 h-100">Make Room</button>
+                    <button onClick={handleNewRoom} className="w-100 h-100">Make Room ⮕</button>
                 </div>
             </div>
         </div>
