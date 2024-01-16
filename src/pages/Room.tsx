@@ -26,9 +26,10 @@ function Room() {
     const [words, setWords] = useState<string[]>([]);
     const [numFakers, setNumFakers] = useState(1);
     const [socket, setSocket] = useState<Socket | null>(null);
+    const [setEdit, setSetEdit] = useState(document.getElementById("setEdit") as HTMLDialogElement);
 
     const roomCode = params.roomCode;
-    const setEdit = document.getElementById("setEdit") as HTMLDialogElement;
+    // const setEdit = document.getElementById("setEdit") as HTMLDialogElement;
 
     useEffect(() => {
         const newsocket = io("ws://localhost:9091")
@@ -98,6 +99,10 @@ function Room() {
     }, [sets])
 
     useEffect(() => {
+        setSetEdit(document.getElementById("setEdit") as HTMLDialogElement)
+    }, [inGame])
+
+    useEffect(() => {
         console.log("editing", editSetId)
         if (setEdit) {
             setEdit.showModal();
@@ -124,10 +129,14 @@ function Room() {
     }
 
     function handleEdit(setid: string) {
-        if (editSetId != setid) {
-            setEditSetId(setid)
+        console.log(setid)
+        setEditSetId(setid)
+
+        if (setEdit) {
+            setEdit.showModal();
+        } else {
+            console.log("no setEdit")
         }
-        setEdit.showModal();
     }
 
     function dialogClose() {
