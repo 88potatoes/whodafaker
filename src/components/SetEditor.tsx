@@ -84,6 +84,8 @@ function SetEditor({ setId, onDelete, onSave}: SetEditorProp) {
         const wordElement = formElement.elements.namedItem('wordentry') as HTMLInputElement;
         if (words.length >= 20) {
             alert("too many words. max: 20 words")
+        } else if (words.includes(wordElement.value)) {
+            alert("duplicate word")
         } else {
             setWords([...words, wordElement.value])
         }
