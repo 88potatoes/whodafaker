@@ -132,15 +132,13 @@ function CreateSet({ setId = "", fromRoom = false }) {
                     <input type="submit" />
                 </form>
             </div>
-            <div className="row">
+            <div className="container">
+                <div className="row">
+                    <CardGrid items={words} deletable={true} delete={(cardword: string) => {
+                        setWords(words.filter(word => word != cardword))
+                    }}/>
+                </div>
             </div>
-        <div className="container">
-            <div className="row">
-                <CardGrid items={words} deletable={true} delete={(cardword: string) => {
-                    setWords(words.filter(word => word != cardword))
-                }}/>
-            </div>
-        </div>
         <div className="row m-2">
             <button onClick={saveSet} className="col-5 m-1"><div className="m-2">Save Set</div></button>
             <button className="col-5 m-1" onClick={() =>{

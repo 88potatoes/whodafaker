@@ -7,12 +7,13 @@ interface CardProps {
 }
 
 function Card(props: CardProps) {
+    // col-sm-3 col-md-2
     return (
     <div className="col-4 col-sm-3 col-md-2 text-center py-3 border-1 border-black">
-        <div className="col bg-primary py-3 d-flex justify-content-around align-items-center rounded">
+        <div className="col-11 bg-primary py-3 d-flex justify-content-around align-items-center rounded">
             <div><strong>{props.word}</strong></div>
             { props.deletable &&
-                <button className="m-2" onClick={() => {props.delete(props.word)}}>X</button>
+                <button  onClick={() => {props.delete(props.word)}}>X</button>
             }  
         </div>
     </div>
