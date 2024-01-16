@@ -38,8 +38,8 @@ function Home() {
                             First join the room, pick a set of words and adjust the settings. When the game starts, you will be given a role. You must try attempt to achieve your role's objective to win.
                             </p>
                         </div>
+                        <h3>Roles</h3>
                         <div>
-                            <h3>Roles</h3>
                             <div>
                                 <h4>Villager</h4>
                                 <img src={goodguy} alt="villager" width={150} height={150} className="mb-3 rounded roleimage"/>
@@ -49,7 +49,6 @@ function Home() {
                             </div>
                         </div>
                         <div>
-                            <h3>Roles</h3>
                             <div>
                                 <h4>Faker</h4>
                                 <img src={faker} alt="faker" width={150} height={150} className="mb-3 rounded roleimage"/>

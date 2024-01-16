@@ -147,12 +147,12 @@ function Room() {
                 <h2>Choose a set</h2>
                 <div className="row" id="setContainer">
                     
-                {/* edit buttons */}
+                {/* set buttons */}
                 {sets.map((setInfo, index) => {
                     return ( 
-                        <div key={index} className="bg-secondary col-4 m-2">
-                            <div className="p-2 d-flex flex-column justify-content-around align-items-center">
-                                <div className="m-1 hoverablecard" onClick={() => {
+                        <div key={index} className=" col-4">
+                            <div className="d-flex flex-column justify-content-around align-items-center bg-secondary my-2 p-4 rounded">
+                                <div className="hoverablecard" onClick={() => {
                                     setGameSet(setInfo)
                                     setWords(setInfo.words)
                                 }}><h4>{setInfo.name}</h4></div>
