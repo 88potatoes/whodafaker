@@ -183,12 +183,16 @@ function Room() {
             </div>
         </div>
     </div> :
-    <div>
-        <CardGrid items={words} deletable={false} delete={() => {}}/>
-        <button onClick={() => {
-            socket?.emit("end_game", {roomCode: roomCode})
-            setInGame(false)
-        }}>End Game</button>
+    <div className="container whitecontainer">
+    
+        <div className="m-4">
+            <h2 className="px-4">Words</h2>
+            <CardGrid items={words} deletable={false} delete={() => {}}/>
+            <button className="px-4" onClick={() => {
+                socket?.emit("end_game", {roomCode: roomCode})
+                setInGame(false)
+            }}>End Game</button>
+        </div>
     </div>
     );
 }
