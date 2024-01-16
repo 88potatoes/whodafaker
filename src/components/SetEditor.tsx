@@ -5,7 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { auth, db } from "../main";
 import { onAuthStateChanged } from "firebase/auth";
 
-function SetEditor({ setId }) {
+interface SetEditorProp {
+    setId: string,
+    onDelete: Function
+}
+
+function SetEditor({ setId, onDelete }: SetEditorProp) {
     const [setName, setSetName] = useState("");
     const [words, setWords] = useState<string[]>([]);
     const navigate = useNavigate();
@@ -85,7 +90,7 @@ function SetEditor({ setId }) {
     return (
     <div className="container">
         <div className="px-4">
-            <h2>Edit sets</h2>
+            <h2>Edit set</h2>
 
             <div className="row m-2">
                 <form className="col-6">
@@ -125,6 +130,7 @@ function SetEditor({ setId }) {
                             confirmation.close();
                             // navigate("/dashboard")
                             // TODO : after delete function
+                            onDelete();
                         })
                 }}>Yes</button>
                 <button onClick={() => {
