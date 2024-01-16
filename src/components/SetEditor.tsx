@@ -7,10 +7,11 @@ import { onAuthStateChanged } from "firebase/auth";
 
 interface SetEditorProp {
     setId: string,
-    onDelete: Function
+    onDelete: Function,
+    onSave: Function
 }
 
-function SetEditor({ setId, onDelete }: SetEditorProp) {
+function SetEditor({ setId, onDelete, onSave}: SetEditorProp) {
     const [setName, setSetName] = useState("");
     const [words, setWords] = useState<string[]>([]);
     const navigate = useNavigate();
@@ -60,18 +61,20 @@ function SetEditor({ setId, onDelete }: SetEditorProp) {
                 navigate(`/createset/${doc.id}`)
                 // TODO: an after save function - actually don't need to
             })
+        } else {
+            // set is already there
+            const docRef = doc(db, "sets", setId)
+            setDoc(docRef, {
+                words: words,
+                id: auth.currentUser.uid,
+                name: setName
+            })
+            alert("set saved")
 
-            return;
         }
 
-        // set is already there
-        const docRef = doc(db, "sets", setId)
-        setDoc(docRef, {
-            words: words,
-            id: auth.currentUser.uid,
-            name: setName
-        })
-        alert("set saved")
+        onSave();
+
         return;       
     }
 

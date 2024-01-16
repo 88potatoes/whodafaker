@@ -39,7 +39,7 @@ function CreateSet() {
             </div>
             <SetEditor setId={paramSetId} onDelete={() => {
                 navigate("/dashboard")
-            }}/>
+            }} onSave={() => {}}/>
         </div>
     </div> );
 }
