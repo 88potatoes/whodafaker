@@ -8,6 +8,7 @@ import { SetInfo } from "./Dashboard";
 import SetCard from "../SetCard";
 import CardGrid from "../CardGrid";
 import CreateSet from "./CreateSet";
+import SetEditor from "../components/SetEditor";
 
 interface RoomProps {
     sets: SetInfo[]
@@ -103,6 +104,10 @@ function Room() {
         setEdit.showModal();
     }
 
+    function dialogClose() {
+        setEdit.close();
+    }
+
     return (
         !inGame ?
     <div className="container whitecontainer">
@@ -165,11 +170,9 @@ function Room() {
                 <h3>Chosen set: <strong>{gameSet.name}</strong></h3>
                 
                 <dialog id="setEdit">
-                    <CreateSet setId={editSetId} fromRoom={true}/>
-                    <button onClick={() => {
-                        setEdit.close();
-                        // setEditSetId("")
-                    }}>Close edit</button>
+                    <SetEditor setId={editSetId} onDelete={dialogClose}/>
+                    {/* <CreateSet setId={editSetId} fromRoom={true}/> */}
+                    <button onClick={dialogClose}>Close edit</button>
                 </dialog>
 
                 { Object.keys(gameSet).length > 0 &&

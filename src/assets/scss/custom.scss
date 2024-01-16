@@ -1,8 +1,8 @@
+$primary: #2f5f32;
+
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 @import "../../../node_modules/bootstrap/scss/variables";
 @import "../../../node_modules/bootstrap/scss/functions";
-
-$primary: #2f5f32;
 
 $theme-colors: map-merge($theme-colors, (
   "primary": $primary
@@ -64,7 +64,7 @@ body {
         height: 100%;
         z-index: -1;
         position: absolute;
-        display: block;
+        display: ;
     }
 }
 
