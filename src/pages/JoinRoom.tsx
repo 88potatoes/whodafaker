@@ -40,11 +40,11 @@ function JoinRoom() {
                     <form onSubmit={JoinRoom}>
                         <div>
                             <label htmlFor="username">Display name</label>
-                            <input type="text" id="username" required />
+                            <input type="text" id="username" required className="mx-2"/>
                         </div>
                         <div>
                             <label htmlFor="roomcode">Room code</label>
-                            <input type="text" id="roomcode" required />
+                            <input type="text" id="roomcode" required className="mx-2"/>
                         </div>
                         <input type="submit" value="Join Room" />
                     </form>

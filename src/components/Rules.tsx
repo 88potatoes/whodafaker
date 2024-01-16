@@ -73,7 +73,7 @@ function Rules() {
 
                                         </li>
                                         <li>
-                                            The host device creates a lobby. All players then join the lobby.
+                                            The host device creates a lobby. All players then join the lobby (players do not need to sign up, only the host does).
 
                                         </li>
                                         <li>

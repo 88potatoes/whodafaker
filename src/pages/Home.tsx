@@ -10,6 +10,11 @@ function Home() {
                         <div className="m-4">
                             <h1 className="">Who's the Faker?</h1>
                             <div className="m-2">
+                                <Link to="/join">
+                                    <button>Join a game</button>
+                                </Link>
+                            </div>
+                            <div className="m-2">
                                 <Link to="/login">
                                     <button>Sign in</button>
                                 </Link>
