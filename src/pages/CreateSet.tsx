@@ -37,7 +37,9 @@ function CreateSet() {
                     navigate("/dashboard")
                 }}><h5>⇦ Dashboard</h5></div>
             </div>
-            <SetEditor setId={paramSetId}/>
+            <SetEditor setId={paramSetId} onDelete={() => {
+                navigate("/dashboard")
+            }}/>
         </div>
     </div> );
 }
