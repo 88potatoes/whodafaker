@@ -9,10 +9,12 @@ interface cardGridProps {
 function CardGrid(props: cardGridProps) {
     console.log(props.items)
     return (
-    <div className="container row gx-3">
-        {props.items.map((item, index) => {
-            return <Card word={item} key={index} deletable={props.deletable} delete={props.delete}/>
-        })}
+    <div className="container gx-3">
+        <div className="row">
+            {props.items.map((item, index) => {
+                return <Card word={item} key={index} deletable={props.deletable} delete={props.delete}/>
+            })}
+        </div>
     </div>
     );
 }

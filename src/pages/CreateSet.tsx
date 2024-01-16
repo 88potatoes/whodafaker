@@ -4,6 +4,7 @@ import { addDoc, collection, deleteDoc, doc, getDoc, setDoc } from "firebase/fir
 import { auth, db } from "../main";
 import { onAuthStateChanged } from "firebase/auth";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import Header from "../components/Header";
 
 interface CreateSetProps {
     setId: string
@@ -112,32 +113,39 @@ function CreateSet({ setId = "", fromRoom = false }) {
     return ( 
     <div className="container whitecontainer">
         <div className="m-4">
-            <div className="container mb-4">
-                <div className="m-2 d-flex align-items-center justify-content-between">
-                    <button onClick={() => {navigate("/dashboard")}}>&lt; Dashboard</button>
-                    <h3 className="float-right">{auth.currentUser?.displayName}</h3>
-                </div>
+            <Header username={auth.currentUser?.displayName}/>
+            <div className="row px-4">
+                <div className="hoverablecard" onClick={() => {
+                    navigate("/dashboard")
+                }}><h5>⇦ Dashboard</h5></div>
             </div>
-            <div className="row m-2">
-                <form className="col-6">
-                    <label htmlFor=""><h4 className="m-1">Set Name</h4></label>
-                    <input type="text" value={setName} onChange={(e) => {
-                        setSetName(e.target.value);
-                    }}/>
-                </form>
+            <div className="px-4">
+                <h2>Edit sets</h2>
 
-                <form id="wordForm" onSubmit={handleNewWord} className="col-6">
-                    <label htmlFor="wordentry"><h4 className="m-1">Add word</h4></label>
-                    <input type="text" id="wordentry" className="m-1"/>
-                    <input type="submit" />
-                </form>
-            </div>
-            <div className="container">
-                <div className="row">
-                    <CardGrid items={words} deletable={true} delete={(cardword: string) => {
-                        setWords(words.filter(word => word != cardword))
-                    }}/>
+                <div className="row m-2">
+                    <form className="col-6">
+                        <label htmlFor=""><h4 className="m-1">Set Name</h4></label>
+                        <input type="text" value={setName} onChange={(e) => {
+                            setSetName(e.target.value);
+                        }}/>
+                    </form>
+
+                    <form id="wordForm" onSubmit={handleNewWord} className="col-6">
+                        <label htmlFor="wordentry"><h4 className="m-1">Add word</h4></label>
+                        <input type="text" id="wordentry" className="m-1"/>
+                        <input type="submit" />
+                    </form>
                 </div>
+                
+                <h2>Words</h2>
+                <div className="container">
+                    <div className="row">
+                        <CardGrid items={words} deletable={true} delete={(cardword: string) => {
+                            setWords(words.filter(word => word != cardword))
+                        }}/>
+                    </div>
+                </div>
+
             </div>
         <div className="row m-2">
             <button onClick={saveSet} className="col-5 m-1"><div className="m-2">Save Set</div></button>
