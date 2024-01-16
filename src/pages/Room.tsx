@@ -142,7 +142,7 @@ function Room() {
                         <h2>Players</h2>
                         <div className="row">
                             {players.map((number, index) => {
-                                return <div className="col-4" key={index}><div className="m-2 bg-primary text-center rounded p-2"><h4 className="mb-1">{number}</h4></div></div>
+                                return <div className="col-4" key={index}><div className="m-2 bg-primary text-center rounded p-2"><h4 className="mb-1 text-white">{number}</h4></div></div>
                             })}
                         </div>
                     </div>

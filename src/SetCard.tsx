@@ -14,7 +14,7 @@ function SetCard(props: setProps) {
             <div onClick={() => {
             navigate(linkTo)
             }} className="col-11 bg-primary rounded hoverablecard text-center my-2 py-5">
-                <h2 className="text-black">{props.word}</h2>
+                <h2 className="text-light">{props.word}</h2>
             </div>
         </div>    
      );
