@@ -60,25 +60,23 @@ function Login() {
                             <input type="password" id="password" required/>
                         </div>
                         <div className="m-2">
-                            <input type="submit" />
+                            <input type="submit" value="Log in"/>
                         </div>
                     </form>
-
-                    <div className="m-2">
-                        <button id="GoogleSignIn" onClick={googleLogin}>Sign in with Google</button>
-                    </div>
-                    <div className="m-2">
-                        <Link to="/">
-                            <button id="HomeButton">Home</button>
-                        </Link>
-                    </div>
                     <div className="d-flex">
-                        <div className="m-2"><p>No Account?</p></div>
-
-                            <Link to="/signup">
-                                <button id="SignupButton">Sign up</button>
-                            </Link>
-
+                        <div className="m-2"><p>No Account? 
+                            <strong id="SignupButton" className="hoverablecard" onClick={() => {
+                                navigate("/signup")
+                            }}> Sign up</strong>
+                            </p></div>
+                    </div>
+                    <div className="m-2">
+                        <button id="GoogleSignIn" className="bg-white text-black" onClick={googleLogin}>Sign in with Google</button>
+                    </div>
+                    <div className="m-2">
+                        <div id="HomeButton" className="hoverablecard" onClick={() => {
+                            navigate("/")
+                        }}><strong>Home</strong></div>
                     </div>
                 </div>
         </div>
