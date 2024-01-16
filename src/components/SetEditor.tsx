@@ -83,7 +83,7 @@ function SetEditor({ setId }) {
     }
 
     return (
-    <>
+    <div className="container">
         <div className="px-4">
             <h2>Edit sets</h2>
 
@@ -132,7 +132,7 @@ function SetEditor({ setId }) {
                 }}>No</button>
             </dialog>
         </div>
-    </>);
+    </div>);
 }
 
 export default SetEditor;
