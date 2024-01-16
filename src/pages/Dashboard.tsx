@@ -89,7 +89,7 @@ function Dashboard() {
             </div>
             
             <div className="row m-3">
-                <div className="col" onClick={handleNewRoom}>
+                <div className="col">
                     <button onClick={handleNewRoom} className="w-100 h-100">Make Room</button>
                 </div>
             </div>
