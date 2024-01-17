@@ -1,10 +1,12 @@
-import { GoogleAuthProvider, getRedirectResult, onAuthStateChanged, signInWithEmailAndPassword, signInWithRedirect } from "firebase/auth";
-import { FormEvent, useEffect } from "react";
+import { GoogleAuthProvider, getRedirectResult, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signInWithRedirect } from "firebase/auth";
+import { FormEvent, useEffect, useState } from "react";
 import { auth } from "../main";
 import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -16,11 +18,12 @@ function Login() {
     function emailLogin(e: FormEvent) {
         e.preventDefault();
         console.log('email login')
-
+        
         const emailInput = document.getElementById('email') as HTMLInputElement;
         const passwordInput = document.getElementById('password') as HTMLInputElement;
-
+        
         console.log(emailInput?.value, passwordInput.value)
+        setLoading(true);
 
         signInWithEmailAndPassword(auth, emailInput.value, passwordInput.value)
         .then(cred => {
@@ -28,17 +31,23 @@ function Login() {
             navigate("/dashboard")
         })
         .catch(error => {
+            alert("login error please try again")
             console.log(error)
+            setLoading(false);
         })
     }
 
     function googleLogin() {
+        console.log("set spinner")
+        setLoading(true);
         const googleProvider = new GoogleAuthProvider();
-        signInWithRedirect(auth, googleProvider)
-        
-        getRedirectResult(auth)
+        signInWithPopup(auth, googleProvider)
         .then(cred => {
             console.log(cred.user)
+        })
+        .catch(error => {
+            console.log(error);
+            setLoading(false);
         })
     }
 
@@ -50,6 +59,8 @@ function Login() {
                         <h1>Who's the Faker?</h1>
                         <h2>Login</h2>
                     </div>
+                    { !loading ? 
+                    <>
                     <form onSubmit={emailLogin} className="d-flex flex-column col-6 justify-content-center align-items-center mb-2 w-100">
                         <div className="d-flex flex-column align-items-start">
                             <label htmlFor="email">Email</label>
@@ -72,7 +83,7 @@ function Login() {
                     </div>
                     <div className="m-2">
                         <button id="GoogleSignIn" className="bg-white text-black" onClick={googleLogin}>Sign in with Google</button>
-                    </div>
+                    </div> </>: <div className="loading"></div>}
                     <div className="m-2">
                         <div id="HomeButton" className="hoverablecard" onClick={() => {
                             navigate("/")
