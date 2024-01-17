@@ -2,12 +2,12 @@ import { signOut } from "firebase/auth";
 import { auth } from "../main";
 import Rules from "./Rules";
 
-// interface HeaderProps {
-//     username: string | null,
-//     hasLogout: boolean
-// }
+interface HeaderProps {
+    username: string | null,
+    hasLogout: boolean
+}
 
-function Header({ username, hasLogout = true }) {
+function Header({ username, hasLogout = true }: HeaderProps) {
     const rulesDialog = document.getElementById("rulesdialog") as HTMLDialogElement;
     function handleLogout() {
         signOut(auth);

@@ -1,21 +1,14 @@
-import { DocumentData, collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import { DocumentData, collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { io, Socket } from "socket.io-client";
-import { auth, db } from "../main";
-import { User, onAuthStateChanged } from "firebase/auth";
-import { SetInfo } from "./Dashboard";
-import SetCard from "../SetCard";
+import { useNavigate, useParams } from "react-router-dom";
+import { Socket, io } from "socket.io-client";
+import { WS_URL } from "../../setup.json";
 import CardGrid from "../CardGrid";
-import CreateSet from "./CreateSet";
-import SetEditor from "../components/SetEditor";
 import Header from "../components/Header";
-import { dotenv } from "../main";
-import { WS_URL } from "../../setup.json"
+import SetEditor from "../components/SetEditor";
+import { auth, db } from "../main";
 
-interface RoomProps {
-    sets: SetInfo[]
-}
 function Room() {
     const params = useParams();
 
@@ -74,7 +67,7 @@ function Room() {
 
     function fetchSets() {
         console.log("sets fetched")
-        const setQuery = query(collection(db, "sets"), where("id", "==", auth.currentUser.uid))
+        const setQuery = query(collection(db, "sets"), where("id", "==", auth.currentUser?.uid))
         getDocs(setQuery)
         .then(snapshot => {
             snapshot.docs.map(doc => {console.log(doc.data())})
@@ -149,7 +142,7 @@ function Room() {
         !inGame ?
             <div className="container whitecontainer">
                 <div className="m-4">
-                    <Header username={auth.currentUser?.displayName} />
+                    <Header username={auth.currentUser?.displayName || null} hasLogout={false}/>
                     <div className="mb-3 mx-4">
                         <h2>Room: <strong>{roomCode}</strong></h2>
                         <button className="col-3" onClick={handleCloseRoom}>Close Room</button>

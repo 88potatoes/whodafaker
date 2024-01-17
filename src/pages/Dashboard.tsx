@@ -1,11 +1,11 @@
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { collection, getDocs, limit, query, where } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import SetCard from "../SetCard";
-import { auth, db } from "../main";
-import Header from "../components/Header";
+import { useNavigate } from "react-router-dom";
 import { GAME_API_URL } from "../../setup.json";
+import SetCard from "../SetCard";
+import Header from "../components/Header";
+import { auth, db } from "../main";
 
 interface SetInfo {
     name: string,
@@ -23,7 +23,7 @@ function Dashboard() {
                 navigate('/login')
                 return;
             }
-            const q = query(collection(db, "sets"), where("id", "==", auth.currentUser.uid))
+            const q = query(collection(db, "sets"), where("id", "==", auth.currentUser?.uid))
             getDocs(q)
             .then(snapshot => {
                 const localSets: SetInfo[] = []
@@ -41,10 +41,6 @@ function Dashboard() {
         
         return () => unsubscribe();
     }, [])
-
-    function handleLogout() {
-        signOut(auth);
-    }
 
     function handleNewRoom() {
 
@@ -64,7 +60,7 @@ function Dashboard() {
     return ( 
     <div className="container whitecontainer">
         <div className="m-4">
-            <Header username={auth.currentUser?.displayName}/>
+            <Header username={auth.currentUser?.displayName || null} hasLogout={true}/>
         
             <div className="row m-3" id="setContainer">
                 <div>

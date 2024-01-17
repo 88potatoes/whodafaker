@@ -1,4 +1,14 @@
-function RoleInfo({ img, goal, info, genstrat, title }) {
+import { ReactElement } from "react";
+
+interface RoleInfoProps {
+    img: string,
+    goal: string | ReactElement,
+    info: string,
+    genstrat: string,
+    title: string
+}
+
+function RoleInfo({ img, goal, info, genstrat, title } : RoleInfoProps) {
     return ( 
     <div className="my-2 secondarysection">
         <div className="px-2 pt-1">

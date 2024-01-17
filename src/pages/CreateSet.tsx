@@ -31,13 +31,13 @@ function CreateSet() {
     return ( 
     <div className="container whitecontainer">
         <div className="m-4">
-            <Header username={auth.currentUser?.displayName}/>
+            <Header username={auth.currentUser?.displayName || null} hasLogout={false}/>
             <div className="row px-4">
                 <div className="hoverablecard" onClick={() => {
                     navigate("/dashboard")
                 }}><h5>⇦ Dashboard</h5></div>
             </div>
-            <SetEditor setId={paramSetId} onDelete={() => {
+            <SetEditor setId={paramSetId || ""} onDelete={() => {
                 navigate("/dashboard")
             }} onSave={() => {}}/>
         </div>

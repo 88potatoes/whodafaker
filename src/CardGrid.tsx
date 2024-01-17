@@ -3,7 +3,7 @@ import Card from "./Card";
 interface cardGridProps {
     items: string[],
     deletable: boolean,
-    delete: Function
+    delete: (a0: string) => void
 }
 
 function CardGrid(props: cardGridProps) {

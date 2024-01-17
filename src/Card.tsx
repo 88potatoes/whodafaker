@@ -1,9 +1,8 @@
-import { isButtonElement } from "react-router-dom/dist/dom";
 
 interface CardProps {
     word: string, 
     deletable: boolean,
-    delete: Function
+    delete: (a0: string) => void;
 }
 
 function Card(props: CardProps) {

@@ -1,7 +1,7 @@
-import { GoogleAuthProvider, getRedirectResult, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signInWithRedirect } from "firebase/auth";
+import { GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { FormEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { auth } from "../main";
-import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
     const navigate = useNavigate();

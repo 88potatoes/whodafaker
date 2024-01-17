@@ -7,8 +7,8 @@ import { onAuthStateChanged } from "firebase/auth";
 
 interface SetEditorProp {
     setId: string,
-    onDelete: Function,
-    onSave: Function
+    onDelete: () => void,
+    onSave: () => void
 }
 
 function SetEditor({ setId, onDelete, onSave}: SetEditorProp) {
@@ -30,8 +30,8 @@ function SetEditor({ setId, onDelete, onSave}: SetEditorProp) {
             const docRef = doc(db, "sets", setId)
             getDoc(docRef)
             .then(doc => {
-                setWords(doc.data().words)
-                setSetName(doc.data().name)
+                setWords(doc.data()?.words)
+                setSetName(doc.data()?.name)
             })
         }
 
