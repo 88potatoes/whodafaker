@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import SetCard from "../SetCard";
 import { auth, db } from "../main";
 import Header from "../components/Header";
+import { GAME_API_URL } from "../../setup.json";
 
 interface SetInfo {
     name: string,
@@ -47,7 +48,7 @@ function Dashboard() {
 
     function handleNewRoom() {
 
-        fetch("http://localhost:9000/game")
+        fetch(GAME_API_URL)
         .then(res => res.json())
         .then(data => {
             console.log(data)

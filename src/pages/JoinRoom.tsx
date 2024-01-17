@@ -1,5 +1,6 @@
 import { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { JOIN_API_URL } from "../../setup.json"
 
 function JoinRoom() {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ function JoinRoom() {
         const queryString = new URLSearchParams({ username: username }).toString();
         console.log(queryString);
 
-        fetch(`http://localhost:9000/join/${roomCode}?${queryString}`)
+        fetch(`${JOIN_API_URL}/${roomCode}?${queryString}`)
             .then(res => res.json())
             .then(body => {
                 const { status } = body;

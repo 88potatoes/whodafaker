@@ -3,6 +3,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import goodguy from "../assets/images/goodguy.png";
 import faker from "../assets/images/faker.png";
+import { WS_URL } from "../../setup.json"
 
 function InRoom() {
     const params = useParams();
@@ -22,7 +23,7 @@ function InRoom() {
             navigate("/join")
         }
         console.log("hook running!")
-        const socket = io("ws://localhost:9091");
+        const socket = io(WS_URL);
         socket.on('connect', () => {
             console.log('Connected to the server!')
             socket.emit("join_room", {roomCode: roomCode, username: username})

@@ -10,6 +10,8 @@ import CardGrid from "../CardGrid";
 import CreateSet from "./CreateSet";
 import SetEditor from "../components/SetEditor";
 import Header from "../components/Header";
+import { dotenv } from "../main";
+import { WS_URL } from "../../setup.json"
 
 interface RoomProps {
     sets: SetInfo[]
@@ -32,7 +34,7 @@ function Room() {
     // const setEdit = document.getElementById("setEdit") as HTMLDialogElement;
 
     useEffect(() => {
-        const newsocket = io("ws://localhost:9091")
+        const newsocket = io(WS_URL)
         newsocket.on('connect', () => {
             console.log("connected to server!")
             newsocket.emit("join_room_host", { roomCode: roomCode })
