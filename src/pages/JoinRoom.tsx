@@ -19,11 +19,14 @@ function JoinRoom() {
         fetch(`${JOIN_API_URL}/${roomCode}?${queryString}`)
             .then(res => res.json())
             .then(body => {
+                console.log("join message", body)
                 const { status } = body;
                 if (status == "good") {
                     navigate(`/joined/${roomCode}`, { state: username })
                 } else if (status == "noRoomCode") {
                     alert("No room with that code exists")
+                } else {
+                    alert("nothing")
                 }
             })
 
