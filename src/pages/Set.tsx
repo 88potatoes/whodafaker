@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../main";
 
-function Set(props) {
+function Set() {
 
     const navigate = useNavigate();
     useEffect(() => {
