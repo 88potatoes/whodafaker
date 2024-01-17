@@ -13099,14 +13099,13 @@ body::before {
 }
 
 .loading {
-  border: 16px solid #f3f3f3;
-  /* Light grey */
-  border-top: 16px solid #3498db;
-  /* Blue */
+  border: 16px solid #f8fffd;
+  border-top: 16px solid #2c7c5e;
   border-radius: 50%;
   width: 120px;
   height: 120px;
   animation: spin 2s linear infinite;
+  margin: 1rem;
 }
 
 @keyframes spin {
