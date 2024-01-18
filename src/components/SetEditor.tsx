@@ -33,6 +33,10 @@ function SetEditor({ setId, onDelete, onSave}: SetEditorProp) {
                 setWords(doc.data()?.words)
                 setSetName(doc.data()?.name)
             })
+            .catch(() => {
+                alert("an error occurred")
+                navigate('/dashboard')
+            })
         }
 
         return () => {

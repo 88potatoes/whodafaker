@@ -12,6 +12,9 @@ function Rules() {
                         <div className="p-4">
                             <h2><strong>Who's the Faker? Rules</strong></h2>
                             <div>
+                                <h4>Video Introduction <a href="https://www.youtube.com/watch?v=MK7PBZSo-po"><strong>here</strong></a></h4>
+                            </div>
+                            <div>
                                 <h3>Introduction</h3>
                                 <p>Who’s the Faker is an in-person / online mafia-style game. At the start of each game, each player is given a role and some instructions. To win, the player must execute their objective.
                                 </p>
