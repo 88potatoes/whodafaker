@@ -7,9 +7,9 @@ function JoinRoom() {
     function joinRoom(e: FormEvent) {
         e.preventDefault();
         const roomCodeElement = document.getElementById('roomcode') as HTMLInputElement;
-        const roomCode = roomCodeElement.value.toUpperCase();
+        const roomCode = roomCodeElement.value.trim().toUpperCase();
         const usernameElement = document.getElementById('username') as HTMLInputElement;
-        const username = usernameElement.value;
+        const username = usernameElement.value.trim();
 
         console.log(roomCode)
 
