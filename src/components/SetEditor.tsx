@@ -87,7 +87,26 @@ function SetEditor({ setId, onDelete, onSave}: SetEditorProp) {
         } else if (words.includes(wordElement.value)) {
             alert("duplicate word")
         } else {
-            setWords([...words, wordElement.value])
+            // use semicolon separated words
+            if (wordElement.value.includes(",")) {
+                const ind_words = wordElement.value.split(",").map(word => word.trim());
+                console.log(ind_words)
+                console.log(20-words.length);
+
+                const new_words = [...words];
+                for (const word of ind_words) {
+                    if (new_words.length >= 20) {
+                        break;
+                    }
+                    if(new_words.includes(word)) {
+                        continue;
+                    }
+                    new_words.push(word);
+                }
+                setWords(new_words)
+            } else {
+                setWords([...words, wordElement.value])
+            }
         }
         wordElement.value = "";
     }
