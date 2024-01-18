@@ -49,7 +49,6 @@ function SetEditor({ setId, onDelete, onSave}: SetEditorProp) {
 
         if (!setId) {
             // need to create a new setId
-            alert("no setid")
 
             addDoc(collection(db, "sets"), {
                 id: auth.currentUser.uid,
@@ -59,7 +58,11 @@ function SetEditor({ setId, onDelete, onSave}: SetEditorProp) {
             .then(doc => {
                 console.log(doc)
                 navigate(`/createset/${doc.id}`)
+                alert("set created")
                 // TODO: an after save function - actually don't need to
+            })
+            .catch(error => {
+                console.log(error)
             })
         } else {
             // set is already there
@@ -69,8 +72,12 @@ function SetEditor({ setId, onDelete, onSave}: SetEditorProp) {
                 id: auth.currentUser.uid,
                 name: setName
             })
-            alert("set saved")
-
+            .then(() => {
+                alert("set saved")
+            })
+            .catch((error) => {
+                console.log(error)
+            })
         }
 
         onSave();
