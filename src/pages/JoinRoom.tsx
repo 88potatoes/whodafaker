@@ -4,7 +4,7 @@ import { JOIN_API_URL } from "../../setup.json"
 
 function JoinRoom() {
     const navigate = useNavigate();
-    function JoinRoom(e: FormEvent) {
+    function joinRoom(e: FormEvent) {
         e.preventDefault();
         const roomCodeElement = document.getElementById('roomcode') as HTMLInputElement;
         const roomCode = roomCodeElement.value.toUpperCase();
@@ -41,7 +41,7 @@ function JoinRoom() {
             </div>
             <div className="row">
                 <div className="col">
-                    <form onSubmit={JoinRoom}>
+                    <form onSubmit={joinRoom}>
                         <div>
                             <label htmlFor="username">Display name</label>
                             <input type="text" id="username" required className="mx-2"/>
