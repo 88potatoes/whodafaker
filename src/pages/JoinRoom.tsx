@@ -54,6 +54,11 @@ function JoinRoom() {
                     </form>
                 </div>
             </div>
+            <div className="m-2">
+                <div id="HomeButton" className="hoverablecard" onClick={() => {
+                    navigate("/")
+                }}><strong>Home</strong></div>
+            </div>
         </div>
     </div>);
 }
