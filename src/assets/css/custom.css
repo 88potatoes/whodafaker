@@ -11970,6 +11970,11 @@ ul {
   font-weight: 700;
 }
 
+@media screen and (max-width: 768px) {
+  .main-title {
+    font-size: 5rem;
+  }
+}
 .villager-pos {
   left: 100px;
 }

@@ -133,13 +133,29 @@ ul {
     font-weight: 700;
 }
 
-// @media screen and (max-width: 576px) {
-//     .main-title {
-//         font-size: 3rem;
-//     }
-// }
+@media screen and (max-width: 768px) {
+    .main-title {
+        font-size: 5rem;
+    }
+}
 
 .villager-pos {
     left: 100px
 }
+
+// .whitecover {
+//     position: relative;
+//     z-index: 1;
+
+//     &::before {
+//         content: "";
+//         position: absolute;
+//         display:block;
+//         background-color: #fff;
+//         width: 100%;
+//         height: 100%;
+//         opacity: 1;
+//         z-index: -4;
+//     }
+// }
 
