@@ -1,13 +1,12 @@
-import { onAuthStateChanged } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GAME_API_URL } from "../../setup.json";
 import SetCard from "../SetCard";
 import Header from "../components/Header";
-import { auth, db } from "../main";
 import ScreenWindow from "../components/ScreenWindow";
 import useRequireAuth from "../components/useRequireAuth";
+import { auth, db } from "../main";
 
 interface SetInfo {
     name: string,
@@ -24,8 +23,7 @@ function Dashboard() {
     const [sets, setSets] = useState<SetInfo[]>([])
 
     useRequireAuth(true, false, () => {
-        console.log(auth.currentUser)
-        const q = query(collection(db, "sets"), where("id", "==", auth.currentUser.uid))
+        const q = query(collection(db, "sets"), where("id", "==", auth.currentUser!.uid))
         console.log("auth success")
         getDocs(q)
             .then(snapshot => {

@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } fro
 import { FormEvent, useEffect } from "react";
 import { auth } from "../main";
 import { useNavigate } from "react-router-dom";
+import useRequireAuth from "../components/useRequireAuth";
 
 /**
  * Signup component - route="/signup"
@@ -9,13 +10,7 @@ import { useNavigate } from "react-router-dom";
  */
 function Signup() {
     const navigate = useNavigate();
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                navigate("/dashboard")
-            }
-        })
-    })
+    useRequireAuth(false, true);
 
     function emailSignup(e: FormEvent) {
         e.preventDefault();

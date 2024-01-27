@@ -8,6 +8,7 @@ import CardGrid from "../CardGrid";
 import Header from "../components/Header";
 import SetEditor from "../components/SetEditor";
 import { auth, db } from "../main";
+import useRequireAuth from "../components/useRequireAuth";
 
 /**
  * Room component - route="/room/:roomCode"
@@ -30,7 +31,9 @@ function Room() {
     const roomCode = params.roomCode;
     // const setEdit = document.getElementById("setEdit") as HTMLDialogElement;
 
-    useEffect(() => {
+    useRequireAuth(true, false, () => {
+        fetchSets();
+
         const newsocket = io(WS_URL)
         newsocket.on('connect', () => {
             console.log("connected to server!")
@@ -52,22 +55,12 @@ function Room() {
 
         setSocket(newsocket);
 
-        const unsubscribe = onAuthStateChanged(auth, user => {
-            if (!user) {
-                navigate('/login');
-                return;
-            }
-
-            fetchSets();
-        })
-
         return () => {
             newsocket.emit("close_room", { roomCode: roomCode })
             newsocket.disconnect();
-            unsubscribe();
             setSocket(null);
         }
-    }, []);
+    })
 
     function fetchSets() {
         console.log("sets fetched")

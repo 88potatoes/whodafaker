@@ -2,6 +2,7 @@ import { GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, sig
 import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../main";
+import useRequireAuth from "../components/useRequireAuth";
 
 
 /**
@@ -12,13 +13,8 @@ function Login() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                navigate("/dashboard")
-            }
-        })
-    })
+    // will redirect to dashboard if already logged in
+    useRequireAuth(false, true)
 
     function emailLogin(e: FormEvent) {
         e.preventDefault();

@@ -1,10 +1,8 @@
-import { onAuthStateChanged } from "firebase/auth";
-import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import SetEditor from "../components/SetEditor";
-import { auth } from "../main";
 import useRequireAuth from "../components/useRequireAuth";
+import { auth } from "../main";
 
 
 /**
@@ -13,7 +11,7 @@ import useRequireAuth from "../components/useRequireAuth";
  */
 function CreateSet() {
     const { setId: paramSetId } = useParams();
-
+    const navigate = useNavigate();
     // page requires authorisation
     useRequireAuth(true);
 
