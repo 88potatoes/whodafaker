@@ -52,7 +52,7 @@ function Signup() {
                     </div>
                     <form onSubmit={emailSignup} className="d-flex flex-column col-6 justify-content-center align-items-center mb-2 w-100">
                         <div className="d-flex flex-column align-items-start">
-                            <label htmlFor="username">Email</label>
+                            <label htmlFor="username">Username</label>
                             <input type="text" id="username" required />
                         </div>
                         <div className="d-flex flex-column align-items-start">
