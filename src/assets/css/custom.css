@@ -11882,6 +11882,12 @@ body::before {
   display: block;
 }
 
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
 *, *::before, *::after, *:hover {
   box-sizing: border-box;
 }
@@ -11962,6 +11968,10 @@ body::before {
 .main-title {
   font-size: 6rem;
   font-weight: 700;
+}
+
+.villager-pos {
+  left: 100px;
 }
 
 /*# sourceMappingURL=custom.css.map */
