@@ -11979,4 +11979,12 @@ ul {
   left: 100px;
 }
 
+#rulesdialog {
+  background-color: #000;
+  color: #000;
+}
+#rulesdialog h5, #rulesdialog .h5 {
+  color: white;
+}
+
 /*# sourceMappingURL=custom.css.map */
