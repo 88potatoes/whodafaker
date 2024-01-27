@@ -7,6 +7,7 @@ import SetCard from "../SetCard";
 import Header from "../components/Header";
 import { auth, db } from "../main";
 import ScreenWindow from "../components/ScreenWindow";
+import useRequireAuth from "../components/useRequireAuth";
 
 interface SetInfo {
     name: string,
@@ -22,30 +23,24 @@ function Dashboard() {
     const navigate = useNavigate();
     const [sets, setSets] = useState<SetInfo[]>([])
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (!user) {
-                navigate('/login')
-                return;
-            }
-            const q = query(collection(db, "sets"), where("id", "==", auth.currentUser?.uid))
-            getDocs(q)
-                .then(snapshot => {
-                    const localSets: SetInfo[] = []
-                    snapshot.docs.forEach(doc => {
+    useRequireAuth(true, false, () => {
+        console.log(auth.currentUser)
+        const q = query(collection(db, "sets"), where("id", "==", auth.currentUser.uid))
+        console.log("auth success")
+        getDocs(q)
+            .then(snapshot => {
+                const localSets: SetInfo[] = []
+                snapshot.docs.forEach(doc => {
 
-                        localSets.push({ name: doc.data().name, id: doc.id })
-                    })
-                    console.log(localSets)
-                    setSets(localSets);
+                    localSets.push({ name: doc.data().name, id: doc.id })
                 })
-                .catch(error => {
-                    console.log(error)
-                })
-        })
-
-        return () => unsubscribe();
-    }, [])
+                console.log(localSets)
+                setSets(localSets);
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    });
 
     function handleNewRoom() {
 

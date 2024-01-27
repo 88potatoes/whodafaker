@@ -21,7 +21,7 @@ describe("Home screen", () => {
         <MemoryRouter>
             <Home/>
         </MemoryRouter>);
-        expect(screen.getByText(/join a game/i)).toBeInTheDocument();
+        expect(screen.getByText(/join game/i)).toBeInTheDocument();
     })
 
     it("should have a sign in button", () => {

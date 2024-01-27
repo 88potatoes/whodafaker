@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import SetEditor from "../components/SetEditor";
 import { auth } from "../main";
+import useRequireAuth from "../components/useRequireAuth";
 
 
 /**
@@ -11,26 +12,10 @@ import { auth } from "../main";
  * @returns 
  */
 function CreateSet() {
-    // console.log("setId:", setId)
     const { setId: paramSetId } = useParams();
-    // console.log("paramSetId:", paramSetId)
-    // const finalSetId = setId || paramSetId;
-    // console.log(paramSetId ? paramSetId : setId)
-    // const [finalSetId, setFinalSetId] = useState( paramSetId ? paramSetId : setId)
-    const navigate = useNavigate();
 
-
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (!user) {
-                navigate("/login")
-            }
-        })
-
-        return () => {
-            unsubscribe();
-        }
-    }, [navigate])
+    // page requires authorisation
+    useRequireAuth(true);
 
     return ( 
     <div className="container whitecontainer">
