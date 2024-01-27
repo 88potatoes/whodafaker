@@ -8,22 +8,25 @@ import Login from './pages/Login';
 import Room from './pages/Room';
 import Signup from './pages/Signup';
 import InRoom from './pages/InRoom';
+import PassiveLayout from './components/PassiveLayout';
 
 function App() {
   return (
-  <Router>
-    <Routes>
-      <Route path="/" element={<Home/>}/>
-      <Route path="/login" element={ <Login/> }/>
-      <Route path="/signup" element={ <Signup/>}/>
-      <Route path="/dashboard" element={  <Dashboard/> }/>
-      <Route path="/createset/" element={ <CreateSet/> }/>
-      <Route path="/createset/:setId" element={ <CreateSet/> }/>
-      <Route path="/room/:roomCode" element={ <Room/> }/>
-      <Route path="/join" element={ <JoinRoom/> }/>
-      <Route path="/joined/:roomCode" element={ <InRoom/> }/>
-    </Routes>
-  </Router>
+    <PassiveLayout>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/createset/" element={<CreateSet />} />
+          <Route path="/createset/:setId" element={<CreateSet />} />
+          <Route path="/room/:roomCode" element={<Room />} />
+          <Route path="/join" element={<JoinRoom />} />
+          <Route path="/joined/:roomCode" element={<InRoom />} />
+        </Routes>
+      </Router>
+    </PassiveLayout>
   )
 }
 

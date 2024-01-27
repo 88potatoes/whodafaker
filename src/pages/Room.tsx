@@ -9,6 +9,10 @@ import Header from "../components/Header";
 import SetEditor from "../components/SetEditor";
 import { auth, db } from "../main";
 
+/**
+ * Room component - route="/room/:roomCode"
+ * @returns 
+ */
 function Room() {
     const params = useParams();
 
@@ -69,13 +73,13 @@ function Room() {
         console.log("sets fetched")
         const setQuery = query(collection(db, "sets"), where("id", "==", auth.currentUser?.uid))
         getDocs(setQuery)
-        .then(snapshot => {
-            snapshot.docs.map(doc => {console.log(doc.data())})
-            const localSets = snapshot.docs.map(doc => ({ ...doc.data(), docId: doc.id }));
-            console.log(localSets)
-            setSets(localSets);
+            .then(snapshot => {
+                snapshot.docs.map(doc => { console.log(doc.data()) })
+                const localSets = snapshot.docs.map(doc => ({ ...doc.data(), docId: doc.id }));
+                console.log(localSets)
+                setSets(localSets);
 
-        })
+            })
     }
 
     useEffect(() => {
@@ -142,7 +146,7 @@ function Room() {
         !inGame ?
             <div className="container whitecontainer">
                 <div className="m-4">
-                    <Header username={auth.currentUser?.displayName || null} hasLogout={false}/>
+                    <Header username={auth.currentUser?.displayName || null} hasLogout={false} />
                     <div className="mb-3 mx-4">
                         <h2>Room: <strong>{roomCode}</strong></h2>
                         <button className="col-3" onClick={handleCloseRoom}>Close Room</button>
@@ -200,14 +204,14 @@ function Room() {
                             <h3>Chosen set: <strong>{gameSet.name}</strong></h3>
 
                             <dialog id="setEdit">
-                                <SetEditor setId={editSetId} 
-                                onDelete={() => {
-                                    dialogClose();
-                                    fetchSets();
-                                }}
-                                onSave={() => {
-                                    fetchSets()
-                                }} />
+                                <SetEditor setId={editSetId}
+                                    onDelete={() => {
+                                        dialogClose();
+                                        fetchSets();
+                                    }}
+                                    onSave={() => {
+                                        fetchSets()
+                                    }} />
                                 {/* <CreateSet setId={editSetId} fromRoom={true}/> */}
                                 <button onClick={dialogClose}>Close edit</button>
                             </dialog>

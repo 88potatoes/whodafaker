@@ -1,4 +1,8 @@
 $primary: #2f5f32;
+$font-family-base: 'Work Sans';
+$font-weight-light: 400;
+$font-weight-normal: 500;
+$font-weight-bold: 700; 
 
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 @import "../../../node_modules/bootstrap/scss/variables";
@@ -37,6 +41,12 @@ body {
     }
 }
 
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
 
 *, *::before, *::after, *:hover {
     box-sizing: border-box;
@@ -53,7 +63,6 @@ body {
 
 .whitecontainer {
     position: relative;
-    background-position: center;
     z-index: 1;
     
     &::before {
@@ -114,3 +123,48 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.hscreen {
+    height: 100vh;
+}
+
+.main-title {
+    font-size: 6rem;
+    font-weight: 700;
+}
+
+@media screen and (max-width: 768px) {
+    .main-title {
+        font-size: 5rem;
+    }
+}
+
+.villager-pos {
+    left: 100px
+}
+
+// .whitecover {
+//     position: relative;
+//     z-index: 1;
+
+//     &::before {
+//         content: "";
+//         position: absolute;
+//         display:block;
+//         background-color: #fff;
+//         width: 100%;
+//         height: 100%;
+//         opacity: 1;
+//         z-index: -4;
+//     }
+// }
+
+#rulesdialog {
+    background-color: #000;
+    color: #000;
+
+    h5 {
+        color: white;
+    }
+}
+
