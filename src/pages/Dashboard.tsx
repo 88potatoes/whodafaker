@@ -12,6 +12,10 @@ interface SetInfo {
     id: string
 }
 
+/**
+ * Dashboard component - route="/dashboard"
+ * @returns 
+ */
 function Dashboard() {
 
     const navigate = useNavigate();

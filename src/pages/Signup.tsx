@@ -3,6 +3,10 @@ import { FormEvent, useEffect } from "react";
 import { auth } from "../main";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Signup component - route="/signup"
+ * @returns 
+ */
 function Signup() {
     const navigate = useNavigate();
     useEffect(() => {

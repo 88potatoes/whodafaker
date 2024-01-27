@@ -6,6 +6,10 @@ import SetEditor from "../components/SetEditor";
 import { auth } from "../main";
 
 
+/**
+ * CreateSet component - route="/createset/:setId?"
+ * @returns 
+ */
 function CreateSet() {
     // console.log("setId:", setId)
     const { setId: paramSetId } = useParams();

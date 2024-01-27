@@ -1,11 +1,10 @@
-import { Link } from "react-router-dom";
-import Rules from "../components/Rules";
 import { motion } from "framer-motion";
-import ScreenWindow from "../components/ScreenWindow";
+import Faker from "../assets/images/faker.png";
+import Villager from "../assets/images/goodguy.png";
 import CenteredFlex from "../components/CenteredFlex";
-import Villager from "../assets/images/goodguy.png"
-import Faker from "../assets/images/faker.png"
 import FramerButton from "../components/FramerButton";
+import Rules from "../components/Rules";
+import ScreenWindow from "../components/ScreenWindow";
 
 const list = {
     hidden: {},
@@ -23,14 +22,10 @@ const item = {
     }
 }
 
-const titlecontainer = {
-
-}
-
-const titleelements = {
-
-}
-
+/**
+ * Homepage component - route="/"
+ * @returns 
+ */
 function Home() {
     return (<>
         <ScreenWindow>

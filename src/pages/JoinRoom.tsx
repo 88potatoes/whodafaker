@@ -2,6 +2,10 @@ import { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { JOIN_API_URL } from "../../setup.json"
 
+/**
+ * JoinRoom component - route="/join"
+ * @returns 
+ */
 function JoinRoom() {
     const navigate = useNavigate();
     function joinRoom(e: FormEvent) {
