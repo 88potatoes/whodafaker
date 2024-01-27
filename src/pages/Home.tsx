@@ -2,11 +2,14 @@ import { Link } from "react-router-dom";
 import Rules from "../components/Rules";
 import { motion } from "framer-motion";
 import ScreenWindow from "../components/ScreenWindow";
+import CenteredFlex from "../components/CenteredFlex";
 
 function Home() {
     return (<>
         <ScreenWindow>
-            <h1>Who's the Faker?</h1>
+            <CenteredFlex>
+                <h1 className="main-title display-1">Who's the Faker?</h1>
+            </CenteredFlex>
         </ScreenWindow>
         <div className="m-4">
             <div className="container text-center d-flex flex-column justify-content-center align-items-center">
