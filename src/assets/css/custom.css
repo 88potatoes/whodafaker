@@ -11897,7 +11897,6 @@ body::before {
 
 .whitecontainer {
   position: relative;
-  background-position: center;
   z-index: 1;
 }
 .whitecontainer::before {
@@ -11955,6 +11954,9 @@ body::before {
   100% {
     transform: rotate(360deg);
   }
+}
+.hscreen {
+  height: 100vh;
 }
 
 /*# sourceMappingURL=custom.css.map */
