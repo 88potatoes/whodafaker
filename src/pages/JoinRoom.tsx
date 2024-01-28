@@ -1,6 +1,7 @@
 import { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { JOIN_API_URL } from "../../setup.json"
+import { usePopup } from "../components/PassiveLayout";
 
 /**
  * JoinRoom component - route="/join"
@@ -15,6 +16,8 @@ function JoinRoom() {
         const usernameElement = document.getElementById('username') as HTMLInputElement;
         const username = usernameElement.value.trim();
 
+        const { setPopup } = usePopup();
+
         console.log(roomCode)
 
         const queryString = new URLSearchParams({ username: username }).toString();
@@ -28,9 +31,7 @@ function JoinRoom() {
                 if (status == "good") {
                     navigate(`/joined/${roomCode}`, { state: username })
                 } else if (status == "noRoomCode") {
-                    alert("No room with that code exists")
-                } else {
-                    alert("nothing")
+                    setPopup("No room with that code exists")
                 }
             })
 
@@ -48,11 +49,11 @@ function JoinRoom() {
                     <form onSubmit={joinRoom}>
                         <div>
                             <label htmlFor="username">Display name</label>
-                            <input type="text" id="username" required className="mx-2"/>
+                            <input type="text" id="username" required className="mx-2" />
                         </div>
                         <div>
                             <label htmlFor="roomcode">Room code</label>
-                            <input type="text" id="roomcode" required className="mx-2"/>
+                            <input type="text" id="roomcode" required className="mx-2" />
                         </div>
                         <input type="submit" value="Join Room" />
                     </form>

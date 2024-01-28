@@ -9,6 +9,7 @@ import SecondarySection from "../components/SecondarySection";
 import SetCard from "../components/SetCard";
 import useRequireAuth from "../components/useRequireAuth";
 import { auth, db } from "../main";
+import { usePopup } from "../components/PassiveLayout";
 
 interface SetInfo {
     name: string,
@@ -23,6 +24,7 @@ function Dashboard() {
 
     const navigate = useNavigate();
     const [sets, setSets] = useState<SetInfo[]>([])
+    const { setPopup } = usePopup();
 
     // requires authentication
     useRequireAuth(true, false, () => {
@@ -77,7 +79,7 @@ function Dashboard() {
                         {sets.length < 6 &&
                             <SetCard text="+" onClick={() => {
                                 if (sets.length >= 6) {
-                                    alert("max of 6 sets. please delete one to make another")
+                                    setPopup("max of 6 sets. please delete one to make another")
                                 } else {
                                     navigate("/createset")
                                 }

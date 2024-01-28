@@ -24,7 +24,7 @@ function Header({ username, hasLogout = true }: HeaderProps) {
                 <h1>Who's the Faker?</h1>
                 <h3>{username}</h3>
             </div>
-            <div className="col-2 text-end">
+            <div className="col-2">
                 <div className="px-2 hoverablecard" onClick={openRules}><h5>Rules</h5></div>
                 <dialog id="rulesdialog" className="position-relative">
                     <div className="position-fixed hoverablecard" onClick={() => {

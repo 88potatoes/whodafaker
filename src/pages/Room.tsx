@@ -9,6 +9,7 @@ import SetEditor from "../components/SetEditor";
 import useRequireAuth from "../components/useRequireAuth";
 import { auth, db } from "../main";
 import ScreenWindow from "../components/ScreenWindow";
+import { usePopup } from "../components/PassiveLayout";
 
 /**
  * Room component - route="/room/:roomCode"
@@ -27,6 +28,7 @@ function Room() {
     const [numFakers, setNumFakers] = useState(1);
     const [socket, setSocket] = useState<Socket | null>(null);
     const [setEdit, setSetEdit] = useState(document.getElementById("setEdit") as HTMLDialogElement);
+    const { setPopup } = usePopup();
 
     const roomCode = params.roomCode;
     // const setEdit = document.getElementById("setEdit") as HTMLDialogElement;
@@ -43,7 +45,7 @@ function Room() {
 
         newsocket.on("join_status", (data) => {
             if (data.status === "fail") {
-                alert(`failed to join room ${roomCode}`)
+                setPopup(`Failed to join room ${roomCode}`)
                 navigate("/dashboard")
             }
         })
@@ -103,7 +105,7 @@ function Room() {
 
     function handleStartGame() {
         if (players.length < 3) {
-            alert("need at least 3 players")
+            setPopup("need at least 3 players")
             return;
         }
 
@@ -150,7 +152,7 @@ function Room() {
                                 <div className="d-flex flex-column justify-content-center align-items-center">
                                     <button onClick={() => {
                                         if (numFakers >= players.length) {
-                                            alert("error: more fakers than players");
+                                            setPopup("Error: more fakers than players");
                                             return;
                                         }
                                         setNumFakers(numFakers + 1)
@@ -158,7 +160,7 @@ function Room() {
                                     <h2>Fakers: <strong>{numFakers}</strong></h2>
                                     <button onClick={() => {
                                         if (numFakers <= 1) {
-                                            alert("error: there must be at least 1 faker")
+                                            setPopup("Error: there must be at least 1 faker")
                                             return;
                                         }
                                         setNumFakers(numFakers - 1)

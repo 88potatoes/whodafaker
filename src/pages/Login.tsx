@@ -1,10 +1,11 @@
-import { GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { FormEvent, useEffect, useState } from "react";
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../main";
-import useRequireAuth from "../components/useRequireAuth";
-import ScreenWindow from "../components/ScreenWindow";
 import FramerButton from "../components/FramerButton";
+import { usePopup } from "../components/PassiveLayout";
+import ScreenWindow from "../components/ScreenWindow";
+import useRequireAuth from "../components/useRequireAuth";
+import { auth } from "../main";
 
 
 /**
@@ -14,6 +15,7 @@ import FramerButton from "../components/FramerButton";
 function Login() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const { setPopup } = usePopup();
 
     // will redirect to dashboard if already logged in
     useRequireAuth(false, true)
@@ -34,7 +36,7 @@ function Login() {
                 navigate("/dashboard")
             })
             .catch(error => {
-                alert("login error please try again")
+                setPopup("Login error please try again")
                 console.log(error)
                 setLoading(false);
             })

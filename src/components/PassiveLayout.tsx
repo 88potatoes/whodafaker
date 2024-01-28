@@ -1,9 +1,19 @@
-import { ReactNode } from "react";
+import { ReactNode, createContext, useContext, useState } from "react";
+import Popup from "./Popup";
 
+/**
+ * children: ReactNode,
+ * className?: string
+ */
 interface OnlyChildProps {
     children: ReactNode,
     className?: string
 }
+
+/**
+ * The popup context
+ */
+const PopupContext = createContext({});
 
 /**
  * Gives an element with centered flex column and width, height of 100%. Used for as the container for all pages.
@@ -11,11 +21,39 @@ interface OnlyChildProps {
  * @returns 
  */
 function PassiveLayout({ children }: OnlyChildProps) {
-    return (<div className="w-100 h-100 d-flex flex-column justify-content-center">
-        {children}
-    </div>);
+    const [popupMessage, setPopupMessage] = useState(<></>)
+    const [popupVisible, setPopupVisible] = useState(false);
+
+    /**
+     * Will display the message in the popup and make it show onscreen
+     * @param message The message to be shown in the popup
+     */
+    function setPopup(message: string | JSX.Element) {
+        setPopupMessage(<>{message}</>);
+        setPopupVisible(true);
+    }
+
+    return (
+        <PopupContext.Provider value={{setPopup}}>
+
+            <div className="w-100 h-100 d-flex flex-column justify-content-center position-relative">
+                {children}
+                <Popup isVisible={popupVisible} closePopup={() => {setPopupVisible(false);}}>{popupMessage}</Popup>
+            </div>
+        </PopupContext.Provider>);
+}
+
+export const usePopup = () => {
+    const context = useContext(PopupContext);
+    if (!context) {
+        throw new Error("usePopup must be used within a PassiveLayout element")
+    }
+
+    return context;
+
 }
 
 export default PassiveLayout;
+
 
 export type { OnlyChildProps };

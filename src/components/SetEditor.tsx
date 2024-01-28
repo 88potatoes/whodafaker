@@ -6,6 +6,7 @@ import { auth, db } from "../main";
 import { onAuthStateChanged } from "firebase/auth";
 import SecondarySection from "./SecondarySection";
 import FramerButton from "./FramerButton";
+import { usePopup } from "./PassiveLayout";
 
 interface SetEditorProp {
     setId: string,
@@ -17,6 +18,7 @@ function SetEditor({ setId, onDelete, onSave }: SetEditorProp) {
     const [setName, setSetName] = useState("");
     const [words, setWords] = useState<string[]>([]);
     const navigate = useNavigate();
+    const { setPopup } = usePopup();
 
     const formElement = document.getElementById('wordForm') as HTMLFormElement;
     const confirmation = document.getElementById("setDeleteConfirm") as HTMLDialogElement;
@@ -36,7 +38,7 @@ function SetEditor({ setId, onDelete, onSave }: SetEditorProp) {
                     setSetName(doc.data()?.name)
                 })
                 .catch(() => {
-                    alert("an error occurred")
+                    setPopup("Unable to fetch word set.")
                     navigate('/dashboard')
                 })
         }
@@ -49,7 +51,7 @@ function SetEditor({ setId, onDelete, onSave }: SetEditorProp) {
 
     function saveSet() {
         if (!auth.currentUser) {
-            alert("not logged in")
+            setPopup("Unable to save set: User not logged in")
             return;
         }
 
@@ -64,8 +66,7 @@ function SetEditor({ setId, onDelete, onSave }: SetEditorProp) {
                 .then(doc => {
                     console.log(doc)
                     navigate(`/createset/${doc.id}`)
-                    alert("set created")
-                    // TODO: an after save function - actually don't need to
+                    setPopup("Set created successfully")
                 })
                 .catch(error => {
                     console.log(error)
@@ -79,7 +80,7 @@ function SetEditor({ setId, onDelete, onSave }: SetEditorProp) {
                 name: setName
             })
                 .then(() => {
-                    alert("set saved")
+                    setPopup("Set saved successfully")
                 })
                 .catch((error) => {
                     console.log(error)
@@ -96,9 +97,9 @@ function SetEditor({ setId, onDelete, onSave }: SetEditorProp) {
 
         const wordElement = formElement.elements.namedItem('wordentry') as HTMLInputElement;
         if (words.length >= 20) {
-            alert("too many words. max: 20 words")
+            setPopup("Too many words. Maximum of 20 words per set.")
         } else if (words.includes(wordElement.value)) {
-            alert("duplicate word")
+            setPopup("Duplicate word.")
         } else {
             // use semicolon separated words
             if (wordElement.value.includes(",")) {

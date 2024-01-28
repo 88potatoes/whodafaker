@@ -35,7 +35,7 @@ function Signup() {
                 navigate("/dashboard")
             })
             .catch(error => {
-                alert(error)
+                console.log(error)
             })
 
 

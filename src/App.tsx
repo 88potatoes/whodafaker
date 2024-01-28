@@ -9,8 +9,12 @@ import Room from './pages/Room';
 import Signup from './pages/Signup';
 import InRoom from './pages/InRoom';
 import PassiveLayout from './components/PassiveLayout';
+import Popup from './components/Popup';
+import { useState } from 'react';
 
 function App() {
+  // const [popupMessage, setPopupMessage] = useState(<></>)
+
   return (
     <PassiveLayout>
       <Router>

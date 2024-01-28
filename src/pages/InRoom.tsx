@@ -4,6 +4,7 @@ import { io } from "socket.io-client";
 import goodguy from "../assets/images/goodguy.png";
 import faker from "../assets/images/faker.png";
 import { WS_URL } from "../../setup.json"
+import { usePopup } from "../components/PassiveLayout";
 
 /**
  * InRoom component - route="/joined/:roomCode"
@@ -20,10 +21,11 @@ function InRoom() {
     console.log("location", location)
     const username = location.state;
     const roomCode = params.roomCode;
+    const { setPopup } = usePopup();
 
     useEffect(() => {
         if (username == null) {
-            alert("error: no username")
+            setPopup("Error: no username")
             navigate("/join")
         }
         console.log("hook running!")
@@ -35,13 +37,13 @@ function InRoom() {
 
         socket.on("join_status", (data) => {
             if (data.status === "fail") {
-                alert(`failed to join room ${roomCode}`)
+                setPopup(`Failed to join room ${roomCode}`)
                 navigate("/join")
             }
         })
 
         socket.on("room_close", () => {
-            alert("room has been closed");
+            setPopup("Room has been closed");
             navigate("/join")
         })
 
