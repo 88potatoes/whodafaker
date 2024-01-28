@@ -3,6 +3,8 @@ import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../main";
 import useRequireAuth from "../components/useRequireAuth";
+import ScreenWindow from "../components/ScreenWindow";
+import FramerButton from "../components/FramerButton";
 
 
 /**
@@ -53,46 +55,38 @@ function Login() {
     }
 
     return (
-        <div className="whitecontainer">
-            <div className="m-4">
-                <div className="col d-flex flex-column justify-content-center text-center align-items-center">
-                    <div>
-                        <h1>Who's the Faker?</h1>
-                        <h2>Login</h2>
-                    </div>
-                    {!loading ?
-                        <>
-                            <form onSubmit={emailLogin} className="d-flex flex-column col-6 justify-content-center align-items-center mb-2 w-100">
-                                <div className="d-flex flex-column align-items-start">
-                                    <label htmlFor="email">Email</label>
-                                    <input type="email" id="email" required />
-                                </div>
-                                <div className="d-flex flex-column align-items-start">
-                                    <label htmlFor="password">Password</label>
-                                    <input type="password" id="password" required />
-                                </div>
-                                <div className="m-2">
-                                    <input type="submit" value="Log in" />
-                                </div>
-                            </form>
-                            <div className="d-flex">
-                                <div className="m-2"><p>No Account?
-                                    <strong id="SignupButton" className="hoverablecard" onClick={() => {
-                                        navigate("/signup")
-                                    }}> Sign up</strong>
-                                </p></div>
+        <ScreenWindow>
+            <div className="offset-6 col-6 d-flex flex-column justify-content-center text-center align-items-center secondarysection h-100">
+                <div>
+                    <h1>Who's the Faker?</h1>
+                    <h2>Login</h2>
+                </div>
+                {!loading ?
+                    <>
+                        <form onSubmit={emailLogin} className="d-flex flex-column col-6 justify-content-center align-items-center mb-2 w-100">
+                            <div className="d-flex flex-column align-items-start">
+                                <label htmlFor="email">Email</label>
+                                <input type="email" id="email" required />
+                            </div>
+                            <div className="d-flex flex-column align-items-start">
+                                <label htmlFor="password">Password</label>
+                                <input type="password" id="password" required />
                             </div>
                             <div className="m-2">
-                                <button id="GoogleSignIn" className="bg-white text-black" onClick={googleLogin}>Sign in with Google</button>
-                            </div> </> : <div className="loading"></div>}
-                    <div className="m-2">
-                        <div id="HomeButton" className="hoverablecard" onClick={() => {
-                            navigate("/")
-                        }}><strong>Home</strong></div>
-                    </div>
-                </div>
+                                <input type="submit" value="Log in" />
+                            </div>
+                        </form>
+                        <div className="d-flex">
+                            <div className="m-2"><p>No Account?
+                                <FramerButton link="/signup" text="Sign up"/>
+                            </p></div>
+                        </div>
+                        <div className="m-2">
+                            <button className="bg-white text-black" onClick={googleLogin}>Sign in with Google</button>
+                        </div> </> : <div className="loading"></div>}
+                <FramerButton link="/" text="Home" />
             </div>
-        </div>);
+        </ScreenWindow>);
 }
 
 export default Login;

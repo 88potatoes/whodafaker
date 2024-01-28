@@ -1,14 +1,14 @@
-import { onAuthStateChanged } from "firebase/auth";
 import { DocumentData, collection, getDocs, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Socket, io } from "socket.io-client";
 import { WS_URL } from "../../setup.json";
-import CardGrid from "../CardGrid";
+import CardGrid from "../components/CardGrid";
 import Header from "../components/Header";
 import SetEditor from "../components/SetEditor";
-import { auth, db } from "../main";
 import useRequireAuth from "../components/useRequireAuth";
+import { auth, db } from "../main";
+import ScreenWindow from "../components/ScreenWindow";
 
 /**
  * Room component - route="/room/:roomCode"
@@ -217,9 +217,9 @@ function Room() {
                     </div>
                 </div>
             </div> :
-            <div className="container whitecontainer">
+            <ScreenWindow>
 
-                <div className="m-4">
+                <div className="row">
                     <h2 className="px-4">Words</h2>
                     <CardGrid items={words} deletable={false} delete={() => { }} />
                     <button className="px-4" onClick={() => {
@@ -227,7 +227,7 @@ function Room() {
                         setInGame(false)
                     }}>End Game</button>
                 </div>
-            </div>
+            </ScreenWindow>
     );
 }
 

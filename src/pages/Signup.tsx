@@ -1,8 +1,10 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, updateProfile } from "firebase/auth";
-import { FormEvent, useEffect } from "react";
-import { auth } from "../main";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import useRequireAuth from "../components/useRequireAuth";
+import { auth } from "../main";
+import FramerButton from "../components/FramerButton";
+import ScreenWindow from "../components/ScreenWindow";
 
 /**
  * Signup component - route="/signup"
@@ -10,6 +12,8 @@ import useRequireAuth from "../components/useRequireAuth";
  */
 function Signup() {
     const navigate = useNavigate();
+
+    // will redirect to dashboard if user is already logged in
     useRequireAuth(false, true);
 
     function emailSignup(e: FormEvent) {
@@ -38,44 +42,33 @@ function Signup() {
     }
 
     return (
-        <div className="whitecontainer">
-            <div className="m-4">
-                <div className="col d-flex flex-column justify-content-center text-center align-items-center">
-                    <div>
-                        <h1>Who's the Faker?</h1>
-                        <h2>Sign up</h2>
-                    </div>
-                    <form onSubmit={emailSignup} className="d-flex flex-column col-6 justify-content-center align-items-center mb-2 w-100">
-                        <div className="d-flex flex-column align-items-start">
-                            <label htmlFor="username">Username</label>
-                            <input type="text" id="username" required />
-                        </div>
-                        <div className="d-flex flex-column align-items-start">
-                            <label htmlFor="email">Email</label>
-                            <input type="email" id="email" required />
-                        </div>
-                        <div className="d-flex flex-column align-items-start">
-                            <label htmlFor="password">Password</label>
-                            <input type="password" id="password" required />
-                        </div>
-                        <div className="m-2">
-                            <input type="submit" value="Sign up" />
-                        </div>
-                    </form>
-
-                    <div className="m-2">
-                        <div id="HomeButton" className="hoverablecard" onClick={() => {
-                            navigate("/")
-                        }}><strong>Home</strong></div>
-                    </div>
-                    <div className="m-2">
-                        <div id="HomeButton" className="hoverablecard" onClick={() => {
-                            navigate("/login ")
-                        }}><strong>Log in</strong></div>
-                    </div>
+        <ScreenWindow>
+            <div className="col d-flex flex-column justify-content-center text-center align-items-center">
+                <div>
+                    <h1>Who's the Faker?</h1>
+                    <h2>Sign up</h2>
                 </div>
+                <form onSubmit={emailSignup} className="d-flex flex-column col-6 justify-content-center align-items-center mb-2 w-100">
+                    <div className="d-flex flex-column align-items-start">
+                        <label htmlFor="username">Username</label>
+                        <input type="text" id="username" required />
+                    </div>
+                    <div className="d-flex flex-column align-items-start">
+                        <label htmlFor="email">Email</label>
+                        <input type="email" id="email" required />
+                    </div>
+                    <div className="d-flex flex-column align-items-start">
+                        <label htmlFor="password">Password</label>
+                        <input type="password" id="password" required />
+                    </div>
+                    <div className="m-2">
+                        <input type="submit" value="Sign up" />
+                    </div>
+                </form>
+                <FramerButton link="/" text="Home" />
+                <FramerButton link="/login" text="Sign in" />
             </div>
-        </div>
+        </ScreenWindow>
     );
 }
 

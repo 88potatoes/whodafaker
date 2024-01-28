@@ -3,6 +3,9 @@ import Header from "../components/Header";
 import SetEditor from "../components/SetEditor";
 import useRequireAuth from "../components/useRequireAuth";
 import { auth } from "../main";
+import ScreenWindow from "../components/ScreenWindow";
+import SecondarySection from "../components/SecondarySection";
+import FramerButton from "../components/FramerButton";
 
 
 /**
@@ -15,20 +18,20 @@ function CreateSet() {
     // page requires authorisation
     useRequireAuth(true);
 
-    return ( 
-    <div className="container whitecontainer">
-        <div className="m-4">
-            <Header username={auth.currentUser?.displayName || null} hasLogout={false}/>
-            <div className="row px-4">
-                <div className="hoverablecard" onClick={() => {
-                    navigate("/dashboard")
-                }}><h5>⇦ Dashboard</h5></div>
-            </div>
+    return (
+        <ScreenWindow>
+            <Header username={auth.currentUser?.displayName || null} hasLogout={false} />
+            <SecondarySection>
+                <div>
+                    <FramerButton link="/dashboard" text="⇦ Dashboard" />
+
+                </div>
+            </SecondarySection>
             <SetEditor setId={paramSetId || ""} onDelete={() => {
                 navigate("/dashboard")
-            }} onSave={() => {}}/>
-        </div>
-    </div> );
+            }} onSave={() => { }} />
+        </ScreenWindow>
+    );
 }
 
 export default CreateSet;
