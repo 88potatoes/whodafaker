@@ -1,6 +1,7 @@
 import { signOut } from "firebase/auth";
 import { auth } from "../main";
 import Rules from "./Rules";
+import SecondarySection from "./SecondarySection";
 
 interface HeaderProps {
     username: string | null,
@@ -18,28 +19,24 @@ function Header({ username, hasLogout = true }: HeaderProps) {
     }
 
     return (
-        <div className="row align-items-center m-2 secondarysection">
-            <div className="p-2 d-flex align-items-center">
-                <div className="col-9">
-                    <h1>Who's the Faker?</h1>
-                    <h3>{username}</h3>
-                </div>
-                <div className="col-3 text-end">
-                    <div className="px-2 hoverablecard" onClick={openRules}><h5>Rules</h5></div>
-                    <dialog id="rulesdialog" className="position-relative">
-                        <div className="position-fixed hoverablecard" onClick={() => {
-                            rulesDialog.close();
-                        }}><h5>Close rules</h5></div>
-                        <Rules />
-                    </dialog>
-                    {hasLogout &&
-                        <h4 onClick={handleLogout} className="interactive_text">Logout</h4>
-                    }
-                </div>
-
-
+        <SecondarySection>
+            <div className="col-10">
+                <h1>Who's the Faker?</h1>
+                <h3>{username}</h3>
             </div>
-        </div>
+            <div className="col-2 text-end">
+                <div className="px-2 hoverablecard" onClick={openRules}><h5>Rules</h5></div>
+                <dialog id="rulesdialog" className="position-relative">
+                    <div className="position-fixed hoverablecard" onClick={() => {
+                        rulesDialog.close();
+                    }}><h5>Close rules</h5></div>
+                    <Rules />
+                </dialog>
+                {hasLogout &&
+                    <h4 onClick={handleLogout} className="interactive_text">Logout</h4>
+                }
+            </div>
+        </SecondarySection>
     );
 }
 

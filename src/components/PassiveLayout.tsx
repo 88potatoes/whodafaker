@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 
 interface OnlyChildProps {
-    children: ReactNode
+    children: ReactNode,
+    className?: string
 }
 
 /**

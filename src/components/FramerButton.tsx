@@ -2,16 +2,32 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 interface FramerButtonProps {
-    link: string,
-    text: string
+    link?: string,
+    text: string,
+    onClick?: () => void
 }
 
-function FramerButton({ link, text }: FramerButtonProps) {
+/**
+ * Button which wobbles using framer motion
+ * @prop link?: string - link to go to on button press -
+ * @prop text: string - text to display on the button
+ * @prop onClick?: () => void - function to execute. will only execute if ink is not supplied
+ * @returns FramerButton component
+ */
+function FramerButton({ link, text, onClick }: FramerButtonProps) {
     const navigate = useNavigate();
 
     return (<motion.button
-        className="m-2"
-        onClick={() => { navigate(link) }}
+        onClick={() => {
+            if (link) {
+                navigate(link);
+                return;
+            }
+            if (onClick) {
+                onClick();
+                return;
+            }
+         }}
         whileHover={{ rotate: `${Math.random()*6-3}deg`, scale: 1.1 }}
         whileTap={{ rotate: `${Math.random()*6-3}deg`, scale: 0.9 }}
     >
