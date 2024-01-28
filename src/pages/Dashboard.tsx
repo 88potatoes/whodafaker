@@ -2,9 +2,11 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GAME_API_URL } from "../../setup.json";
-import SetCard from "../SetCard";
+import FramerButton from "../components/FramerButton";
 import Header from "../components/Header";
 import ScreenWindow from "../components/ScreenWindow";
+import SecondarySection from "../components/SecondarySection";
+import SetCard from "../components/SetCard";
 import useRequireAuth from "../components/useRequireAuth";
 import { auth, db } from "../main";
 
@@ -22,6 +24,7 @@ function Dashboard() {
     const navigate = useNavigate();
     const [sets, setSets] = useState<SetInfo[]>([])
 
+    // requires authentication
     useRequireAuth(true, false, () => {
         const q = query(collection(db, "sets"), where("id", "==", auth.currentUser!.uid))
         console.log("auth success")
@@ -59,34 +62,35 @@ function Dashboard() {
         <ScreenWindow>
             <Header username={auth.currentUser?.displayName || null} hasLogout={true} />
 
-            <div className="row m-3" id="setContainer">
-                <div>
-                    <h2>Your sets</h2>
-                </div>
-                <div className="row">
-                    {sets.map((setInfo, index) => {
-                        console.log(setInfo)
-                        return <SetCard word={setInfo.name} key={index} setId={setInfo.id} />
-                    })
-                    }
-                    <div className="col-3 d-flex flex-column justify-content-center align-items-center">
-                        <div onClick={() => {
-                            if (sets.length >= 5) {
-                                alert("max of 5 sets. please delete one to make another")
-                            } else {
-                                navigate("/createset")
-                            }
-                        }} className="col-11 bg-black rounded hoverablecard text-center my-2 py-5">
-                            <h2 className="text-white">Create New Set</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div className="row m-3">
-                <div className="col">
-                    <button onClick={handleNewRoom} className="w-100 h-100">Make Room ⮕</button>
-                </div>
+            <div className="row">
+                <SecondarySection className="col-8">
+                    <div>
+                        <h2>Your sets</h2>
+                    </div>
+                    <div className="row">
+                        {sets.map((setInfo, index) => {
+                            console.log(setInfo)
+                            return <SetCard text={setInfo.name} key={index} setId={setInfo.id} />
+                        })
+                        }
+                        {sets.length < 6 &&
+                            <SetCard text="+" onClick={() => {
+                                if (sets.length >= 6) {
+                                    alert("max of 6 sets. please delete one to make another")
+                                } else {
+                                    navigate("/createset")
+                                }
+                            }} />
+                        }
+                    </div>
+                </SecondarySection>
+
+                <SecondarySection className="col-4">
+                    <div>
+                        <FramerButton text={"Create Room"} onClick={handleNewRoom} />
+                    </div>
+                </SecondarySection>
             </div>
         </ScreenWindow>
     );
