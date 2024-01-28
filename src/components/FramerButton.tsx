@@ -11,7 +11,7 @@ interface FramerButtonProps {
  * Button which wobbles using framer motion
  * @prop link?: string - link to go to on button press -
  * @prop text: string - text to display on the button
- * @prop onClick?: () => void - function to execute. will only execute if ink is not supplied
+ * @prop onClick?: () => void - function to execute. will only execute if link is not supplied
  * @returns FramerButton component
  */
 function FramerButton({ link, text, onClick }: FramerButtonProps) {
