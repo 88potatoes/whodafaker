@@ -66,7 +66,7 @@ function Signup() {
                     </div>
                 </form>
                 <FramerButton link="/" text="Home" />
-                <FramerButton link="/login" text="Sign in" />
+                <FramerButton link="/login" text="Log in" />
             </div>
         </ScreenWindow>
     );

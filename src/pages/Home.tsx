@@ -57,10 +57,10 @@ function Home() {
 
                     <motion.ul variants={list} initial="hidden" animate="show" className="d-flex flex-column justify-content-center align-items-center">
                         <motion.li variants={item} className="mt-2">
-                            <FramerButton link="/join" text="Join Game" />
+                            <FramerButton link="/join" text="Join Room" />
                         </motion.li>
                         <motion.li variants={item} className="mt-2">
-                            <FramerButton link="/login" text="Sign in" />
+                            <FramerButton link="/login" text="Log in" />
                         </motion.li>
                         <motion.li variants={item} className="mt-2">
                             <FramerButton link="/signup" text="Sign up" />
