@@ -24,9 +24,11 @@ const auth = getAuth(app);
 
 export { app, db, auth };
 
+if (document.getElementById('root')) {
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+  )
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+}

@@ -1,16 +1,14 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './assets/css/custom.css';
+import PassiveLayout from './components/PassiveLayout';
 import CreateSet from './pages/CreateSet';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
+import InRoom from './pages/InRoom';
 import JoinRoom from './pages/JoinRoom';
 import Login from './pages/Login';
 import Room from './pages/Room';
 import Signup from './pages/Signup';
-import InRoom from './pages/InRoom';
-import PassiveLayout from './components/PassiveLayout';
-import Popup from './components/Popup';
-import { useState } from 'react';
 
 function App() {
   // const [popupMessage, setPopupMessage] = useState(<></>)
