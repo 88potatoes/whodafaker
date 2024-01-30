@@ -13,12 +13,15 @@ expect.extend(matchers);
 
 // Home tests
 describe("Home screen", () => {
-    it("should have title", () => {
-        render(
+    it("should have title and rules", () => {
+        const { getByText } = render(
             <MemoryRouter>
                 <Home />
-            </MemoryRouter>);
+            </MemoryRouter>
+        );
         expect(screen.getAllByRole("heading")[0]).toHaveTextContent(/who's the faker\?/i)
+
+        expect(getByText(/who's the faker\? rules/i)).toBeInTheDocument();
 
     })
 
@@ -85,11 +88,11 @@ describe("Home screen", () => {
         // / -> /join
         fireEvent.click(getAllByText(/join room/i)[0]);
         expect(getAllByText(/join room/i)[0]).toBeInTheDocument();
-        
+
         // /join -> /
         fireEvent.click(getAllByText(/Home/i)[0]);
         expect(getAllByText(/Who's the Faker\?/i)[0]).toBeInTheDocument();
-        
+
         // / -> /login
         fireEvent.click(getAllByText(/Log in/i)[0]);
         expect(getAllByText(/Login/i)[0]).toBeInTheDocument();
