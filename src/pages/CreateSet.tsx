@@ -7,31 +7,41 @@ import ScreenWindow from "../components/ScreenWindow";
 import SecondarySection from "../components/SecondarySection";
 import FramerButton from "../components/FramerButton";
 
-
 /**
- * CreateSet component - route="/createset/:setId?"
- * @returns 
+ * Page for creating a set \
+ * Contains a SetEditor component for editing the set
+ *
+ * @returns Page for creating a set
  */
 function CreateSet() {
-    const { setId: paramSetId } = useParams();
-    const navigate = useNavigate();
-    // page requires authorisation
-    useRequireAuth(true);
+  const { setId: paramSetId } = useParams();
+  const navigate = useNavigate();
 
-    return (
-        <ScreenWindow>
-            <Header username={auth.currentUser?.displayName || null} hasLogout={false} />
-            <SecondarySection>
-                <div>
-                    <FramerButton link="/dashboard" text="⇦ Dashboard" />
+  // page requires authorisation
+  useRequireAuth(true);
 
-                </div>
-            </SecondarySection>
-            <SetEditor setId={paramSetId || ""} onDelete={() => {
-                navigate("/dashboard")
-            }} onSave={() => { }} />
-        </ScreenWindow>
-    );
+  return (
+    <ScreenWindow>
+      <Header
+        username={auth.currentUser?.displayName || null}
+        hasLogout={false}
+      />
+
+      {/* Main body */}
+      <SecondarySection>
+        <div>
+          <FramerButton link="/dashboard" text="⇦ Dashboard" />
+        </div>
+      </SecondarySection>
+      <SetEditor
+        setId={paramSetId || ""}
+        onDelete={() => {
+          navigate("/dashboard");
+        }}
+        onSave={() => {}}
+      />
+    </ScreenWindow>
+  );
 }
 
 export default CreateSet;
